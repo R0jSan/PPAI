@@ -22,3 +22,19 @@ maridajes = [Maridaje("Ensaladas", "Tanto el rosado como el blanco seco con arom
              Maridaje("Legumbres", "Son un gran maridaje para el vino tinto."),
              Maridaje("Postres dulces", "Para disfrutar de un momento dulce, es preciso elegir un vino dulce."),]
 
+#Array con Vinos
+
+Vinos = [Vino(bodega[0], "Catena Alta Cabernet Sauvignon",2020,None,8000)
+         Vino(bodega[0], "Catena Alta Mabel",2020, None, 7600)
+         Vino(bodega[0], "Catena Alta Chardonnay", 2021, None, 9200)
+         Vino(bodega[1], "Tonel 137", 2016, None, 8300)
+         Vino(bodega[1], "Tonel 46", 2016, None, 8500)
+         Vino(bodega[1], "Tonel 14", 2016, None, 9000)
+         Vino(bodega[2], "Azul Malbec",2014, None,6500)
+         Vino(bodega[2], "Azul CabernetSauvignon", 2014, None, 6500)
+         Vino(bodega[2], "Azul Sauvignon Blanco",2014, None, 6250)
+         Vino(bodega[3], "Santa Julia Reserva Syrah", 2015, None, 7500)
+         Vino(bodega[3], "Malbec Magna", 2019, None, 7900)
+         Vino(bodega[3], "Santa Julia Cabernet Sauvignon", 2017, None, 4000)
+    ] 
+
