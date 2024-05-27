@@ -107,14 +107,14 @@ if __name__ == '__main__':
 
 
     vinosMock = [
-    Vino(bodegasMock[0], "Catena Malbec", 2019, "etiqueta_catena_malbec.jpg", 1200, maridajes[0], varietales[0]),
-    Vino(bodegasMock[0], "Catena Chardonnay", 2020, "etiqueta_catena_chardonnay.jpg", 1300, maridajes[1], varietales[2]),
-    Vino(bodegasMock[1], "Santa Julia Malbec", 2018, "etiqueta_santa_julia_malbec.jpg", 900, maridajes[0], varietales[0]),
-    Vino(bodegasMock[1], "Santa Julia Cabernet Sauvignon", 2017, "etiqueta_santa_julia_cabernet.jpg", 1000, maridajes[4], varietales[1]),
-    Vino(bodegasMock[2], "La Azul Malbec", 2016, "etiqueta_la_azul_malbec.jpg", 800, maridajes[2], varietales[0]),
-    Vino(bodegasMock[2], "La Azul Blanco", 2021, "etiqueta_la_azul_blanco.jpg", 750, maridajes[1], varietales[3]),
-    Vino(bodegasMock[3], "Los Toneles Reserva", 2015, "etiqueta_los_toneles_reserva.jpg", 1500, maridajes[2], varietales[4]),
-    Vino(bodegasMock[3], "Los Toneles Gran Reserva", 2014, "etiqueta_los_toneles_gran_reserva.jpg", 2000, maridajes[2], varietales[4])
+    Vino(bodegasMock[0], "Catena Malbec", 2019, "etiqueta_catena_malbec.jpg", 1200, maridajes[0], varietales[0], "Frutado con notas de ciruela y moras."),
+    Vino(bodegasMock[0], "Catena Chardonnay", 2020, "etiqueta_catena_chardonnay.jpg", 1300, maridajes[1], varietales[2], "Aromas de manzana verde y pera con un toque de vainilla."),
+    Vino(bodegasMock[1], "Santa Julia Malbec", 2018, "etiqueta_santa_julia_malbec.jpg", 900, maridajes[0], varietales[0], "Notas de frutos rojos y taninos suaves."),
+    Vino(bodegasMock[1], "Santa Julia Cabernet Sauvignon", 2017, "etiqueta_santa_julia_cabernet.jpg", 1000, maridajes[4], varietales[1], "Aromas a pimiento verde y grosella negra."),
+    Vino(bodegasMock[2], "La Azul Malbec", 2016, "etiqueta_la_azul_malbec.jpg", 800, maridajes[2], varietales[0], "Sabores intensos de ciruela y especias."),
+    Vino(bodegasMock[2], "La Azul Blanco", 2021, "etiqueta_la_azul_blanco.jpg", 750, maridajes[1], varietales[3], "Fresco con notas cítricas y florales."),
+    Vino(bodegasMock[3], "Los Toneles Reserva", 2015, "etiqueta_los_toneles_reserva.jpg", 1500, maridajes[2], varietales[4], "Cuerpo robusto con sabores de roble y frutas maduras."),
+    Vino(bodegasMock[3], "Los Toneles Gran Reserva", 2014, "etiqueta_los_toneles_gran_reserva.jpg", 2000, maridajes[2], varietales[4], "Complejo con notas de chocolate, tabaco y vainilla.")
 ]
     
     for vino in vinosMock:
@@ -122,6 +122,7 @@ if __name__ == '__main__':
 
     
     gestor.bodegas = bodegasMock
+    gestor.maridajes = maridajes
 
     # Mostrar la pantalla y ejecutar el método del gestor
     pantalla.show()

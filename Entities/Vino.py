@@ -1,5 +1,5 @@
 class Vino:
-    def __init__(self, bodega, nombre, anio, imgEtiqueta, precioARS, maridaje, varietal):
+    def __init__(self, bodega, nombre, anio, imgEtiqueta, precioARS, maridaje, varietal, notaCata):
         self.bodega = bodega
         self.nombre = nombre
         self.anio = anio
@@ -9,6 +9,7 @@ class Vino:
         self.varietal = varietal
         self.fechaActualizacion = None #!
         self.paraActualizar = False #!
+        self.notaCata = notaCata
 
     def crearVino():
         pass
@@ -22,8 +23,8 @@ class Vino:
     def sosEsteVino(self, nombreBusqueda):
         return self.nombre == nombreBusqueda
 
-    def sosParaActualizar(self):
-        return self.paraActualizar
+    def sosVinoParaActualizar(self, vinoActualizar):
+        return (vinoActualizar.nombre == self.vino)
 
     def setPrecio(self, nuevoPrecio):
         self.precioARS = nuevoPrecio

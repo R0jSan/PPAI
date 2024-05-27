@@ -1,51 +1,68 @@
+from Entities.Vino import Vino
 from Interface.InterfazApiBodega import InterfazApiBodega
-from Interface.PantallaImportacionNovedades import PantallaImportacionNovedades
+
 
 class GestorImportacionNovedades:
-
-    def __init__(self,pantallaImportacionNovedades):
+    def __init__(self, pantallaImportacionNovedades):
         self.bodegas = []
         self.bodegasActualizables = []
         self.nombreBodegasActualizables = []
         self.pantallaImportacionNovedades = pantallaImportacionNovedades
+        self.maridajes = []
+        self.vinosActualizables = []
 
     def opcionImportarActualizacionVinos(self):
         self.buscarBodegasActualizables()
-        self.pantallaImportacionNovedades.mostrarBodegasActualizables(self.nombreBodegasActualizables)
-        bodegaSeleccionada = self.pantallaImportacionNovedades.tomarBodegasSeleccionada()
-        actualizacionesVinos = self.obtenerActVinosBodegaSeleccionada(bodegaSeleccionada)
-        self.obtenerVinosActualizables(bodegaSeleccionada)
+        self.pantallaImportacionNovedades.mostrarBodegasActualizables(self.bodegasActualizables)
+        self.pantallaImportacionNovedades.seleccionar_bodega_button.clicked.connect(self.procesarBodegaSeleccionada)
 
+    def procesarBodegaSeleccionada(self):
+        bodegaSeleccionada = self.pantallaImportacionNovedades.tomarBodegasSeleccionada()
+        if bodegaSeleccionada is not None:
+            actualizacionesVinos = self.obtenerActVinosBodegaSeleccionada(bodegaSeleccionada)
+            self.obtenerVinosActualizables(bodegaSeleccionada, actualizacionesVinos)
+            self.actualizarOCrearVinos(bodegaSeleccionada, self.vinosActualizables)
+            self.pantallaImportacionNovedades.mostrarVinosActualizados(bodegaSeleccionada, self.vinosActualizables)
+            self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)  # Cambiar a la vista de vinos actualizados
 
     def buscarBodegasActualizables(self):
-
-        #Busca desde las bodegas que estan en periodo de actualizacion, las guarda en la lista bodegasActualizables junto a su nombre
-        # en la lista NombreBodegasActualizables (los cuales deberian tener el mismo indice)
-
+        self.bodegasActualizables.clear()
         for bodega in self.bodegas:
-
             if bodega.sePuedeActualizarNovedades():
                 self.bodegasActualizables.append(bodega)
-                self.nombreBodegasActualizables.append(bodega.getNombre())
 
     def obtenerActVinosBodegaSeleccionada(self, bodegaSeleccionada):
         return InterfazApiBodega().obtenerActualizacionesVinos(bodegaSeleccionada)
     
-    def obtenerVinosActualizables(self, bodegaSeleccionada):
+    def obtenerVinosActualizables(self, bodegaSeleccionada, actualizacionesVinos):
+        vinosActualizables = []
+        for vino in actualizacionesVinos:
+            if bodegaSeleccionada.tenesEsteVino(vino):
+                vinosActualizables.append(vino)
+        self.vinosActualizables = vinosActualizables
+
+    def actualizarOCrearVinos(self, bodegaSeleccionada, vinosActualizables):
+        for vino in vinosActualizables:
+            if bodegaSeleccionada.tenesEsteVino(vino):
+                self.actualizarCaracteristicasVinoExistente(vino)
+            else:
+                self.crearVino(vino)
+    
+    def actualizarCaracteristicasVinoExistente(self, vino):
+        InterfazApiBodega().actualizarDatosVino(vino)
+
+    def determinarVinosActualizar(self):
         pass
 
-    def determinarVinosActualizar():
-        pass
+    def crearVino(self, vino):
+        # Crear un nuevo vino en la bodega seleccionada
+        self.buscarMaridaje(vino.maridaje)
+        vinoNuevo = Vino(vino.bodega, vino.nombre, vino.anio, vino.imgEtiqueta, vino.precioARS, vino.maridaje, vino.varietal, vino.notaCata)
+        vino.bodega.addVino(vinoNuevo)
 
-    def actualizarOCrearVinos():
-        pass
+    def buscarMaridaje(self, maridaje):
+        for maridaje in self.maridajes:
+            maridaje.sosMaridaje() 
 
-    def actualizarVinoExistente():
-        pass
-
-    def crearVino():
-        #vino = Vino(bodega, nombre, random.randint(2000, 2024), None, random.randint(2000,5000))
-        pass
-
-    def buscarSeguidoresBodega():
+    def buscarSeguidoresBodega(self):
         pass

@@ -31,7 +31,7 @@ class PantallaImportacionNovedades(QMainWindow):
         self.stacked_widget.addWidget(self.importacion_vinos_widget)
         self.stacked_widget.addWidget(self.bodega_seleccionada_widget)
 
-        self.stacked_widget.setCurrentIndex(0)  #Las "ventanas" son capas apiladas, la 0 es el menu principal 
+        self.stacked_widget.setCurrentIndex(0)  # Las "ventanas" son capas apiladas, la 0 es el menu principal 
 
     def menu_principal_widget(self):
         # Layout del menu principal
@@ -109,7 +109,7 @@ class PantallaImportacionNovedades(QMainWindow):
         bon_vino_label = QLabel("BON VINO")
         self.bodega_label = QLabel()
         vinos_actualizados_label = QLabel("Vinos actualizados: ")
-        lista_vinos = QListWidget()
+        self.lista_vinos = QListWidget()
         volver_button = QPushButton("Volver")
 
         bon_vino_label.setFont(QFont("PMingLiU-ExtB", 50))
@@ -124,7 +124,7 @@ class PantallaImportacionNovedades(QMainWindow):
         layout.addWidget(bon_vino_label)
         layout.addWidget(self.bodega_label)
         layout.addWidget(vinos_actualizados_label)
-        layout.addWidget(lista_vinos)
+        layout.addWidget(self.lista_vinos)
         layout.addWidget(volver_button)
 
         volver_button.clicked.connect(self.mostrar_importacion_vinos)
@@ -134,10 +134,10 @@ class PantallaImportacionNovedades(QMainWindow):
     def tomarBodegasSeleccionada(self):  
         selectedItems = self.bodegas_actualizables_list.selectedItems()
         if selectedItems:
-            self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
-            bodegaseleccionada = selectedItems
+            bodegaSeleccionada = selectedItems[0].data(Qt.UserRole)
+            self.bodega_label.setText(f"Bodega {bodegaSeleccionada.getNombre()}")
             self.stacked_widget.setCurrentIndex(2)
-            return bodegaseleccionada
+            return bodegaSeleccionada
         else:
             adv = QMessageBox()
             adv.setWindowTitle("Error")
@@ -162,13 +162,22 @@ class PantallaImportacionNovedades(QMainWindow):
             
     def mostrarBodegasActualizables(self, bodegas):
         self.bodegas_actualizables_list.clear()
-        self.bodegas_actualizables_list.addItems(bodegas)
+        for bodega in bodegas:
+            item = QListWidgetItem(bodega.getNombre())
+            item.setData(Qt.UserRole, bodega)
+            self.bodegas_actualizables_list.addItem(item)
 
     def mostrar_importacion_vinos(self):
         self.stacked_widget.setCurrentIndex(1) 
 
     def mostrar_menu_principal(self):
         self.stacked_widget.setCurrentIndex(0)
+
+    def mostrarVinosActualizados(self, bodega, vinos):
+        self.bodega_label.setText(f"Bodega: {bodega.getNombre()}")
+        self.lista_vinos.clear()
+        for vino in vinos:
+            self.lista_vinos.addItem(f"Nombre: {vino.nombre}, Año: {vino.anio}, Precio: {vino.precioARS}, Maridaje: {vino.maridaje}, Varietal: {vino.varietal}, Nota de cata: {vino.notaCata}")
 
 if __name__ == "__main__":
     import sys
@@ -199,3 +208,4 @@ stylesheet = """
     }
     }
 """
+

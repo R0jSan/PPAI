@@ -67,3 +67,8 @@ class Bodega:
         
         diferencia = datetime.datetime.now() -  self.fechaUltimaActualizacion
         return self.periodoActualizacion <= (diferencia.days/30)
+    
+    def tenesEsteVino(self, vino):
+        for vino in self.vinos:
+            vino.sosEsteVino(vino.nombre)
+
