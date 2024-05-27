@@ -9,7 +9,7 @@ class PantallaImportacionNovedades(QMainWindow):
         self.setFixedSize(390, 695) 
 
         # Imagen de fondo
-        pixmap = QPixmap('C:\\Users\\Mati\\Desktop\\bonvino.png')
+        pixmap = QPixmap('bonvino.png')
         palette = self.palette()
         palette.setBrush(QPalette.Window, QBrush(pixmap))
         self.setPalette(palette)
