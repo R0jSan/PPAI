@@ -107,7 +107,10 @@ class PantallaImportacionNovedades(QMainWindow):
         layout = QVBoxLayout(widget)
 
         bon_vino_label = QLabel("BON VINO")
-        self.bodega_label = QLabel("Bodega ")
+        self.bodega_label = QLabel()
+        vinos_actualizados_label = QLabel("Vinos actualizados: ")
+        lista_vinos = QListWidget()
+        volver_button = QPushButton("Volver")
 
         bon_vino_label.setFont(QFont("PMingLiU-ExtB", 50))
         bon_vino_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
@@ -115,18 +118,46 @@ class PantallaImportacionNovedades(QMainWindow):
         self.bodega_label.setFont(QFont("PMingLiU-ExtB", 15))
         self.bodega_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
 
+        vinos_actualizados_label.setFont(QFont("PMingLiU-ExtB", 15))
+        self.bodega_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+
         layout.addWidget(bon_vino_label)
         layout.addWidget(self.bodega_label)
+        layout.addWidget(vinos_actualizados_label)
+        layout.addWidget(lista_vinos)
+        layout.addWidget(volver_button)
+
+        volver_button.clicked.connect(self.mostrar_importacion_vinos)
 
         return widget
 
     def tomarBodegasSeleccionada(self):  
         selectedItems = self.bodegas_actualizables_list.selectedItems()
-        if not selectedItems:
-            QMessageBox.warning(self, "Advertencia", "")
-            return None
-        self.bodega_label.setText(f"{self.bodega_label.text()} {selectedItems[0].text()}")
-        self.stacked_widget.setCurrentIndex(2)
+        if selectedItems:
+            self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
+            bodegaseleccionada = selectedItems
+            self.stacked_widget.setCurrentIndex(2)
+        else:
+            adv = QMessageBox()
+            adv.setWindowTitle("Error")
+            adv.setText("Seleccione una bodega")
+            stylesheet_adv = '''
+                            QLabel { 
+                                color: black; 
+                                }
+                            QPushButton {
+                                font-size: 15px; 
+                                background-color: white; 
+                                color: black; 
+                                border-radius: 2px; 
+                                height: 25px; 
+                                width: 160px; 
+                                }
+                            QPushButton:hover {
+                                background-color: #8ff8ff
+                                }'''
+            adv.setStyleSheet(stylesheet_adv)
+            adv.exec_()
             
     def mostrarBodegasActualizables(self, bodegas):
         self.bodegas_actualizables_list.clear()
@@ -148,7 +179,7 @@ if __name__ == "__main__":
 stylesheet = """
     QLabel {
         background-color: transparent;
-        color: white;
+        color: black;
         padding: 5px;
     }
     QPushButton {

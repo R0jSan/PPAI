@@ -25,7 +25,7 @@ stylesheet = """
         font-size: 20px;
         background-color: white;
         color: black;
-        border-radius: 30px;
+        border-radius: 15px;
         height: 70px;
         width: 350px;
     }
@@ -33,7 +33,8 @@ stylesheet = """
         background-color: #8ff8ff
     }
     QListWidget {
-        
+        font-size: 15px;
+        color: black;
     }
     }
 """
