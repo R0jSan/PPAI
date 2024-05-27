@@ -38,3 +38,15 @@ Vinos = [Vino(bodega[0], "Catena Alta Cabernet Sauvignon",2020,None,8000)
          Vino(bodega[3], "Santa Julia Cabernet Sauvignon", 2017, None, 4000)
     ] 
 
+# Usuarios
+
+usuario_1 = Usuario("ME_Jimenez", "contraseña1")
+usuario_2 = Usuario("David84", "constraseña2")
+usuario_3 = Usuario("Mica_Navarrete92", "constraseña3")
+usuario_4 = Usuario("Fran_89", "constraseña4")
+
+# Enófilos
+enofilo_1 = Enofilo("María Elena", "Jimenez", None, usuario_1)
+enofilo_1 = Enofilo("David", "Iglesias", None, usuario_2)
+enofilo_1 = Enofilo("Micaela", "Navarrete", None, usuario_3)
+enofilo_1 = Enofilo("Francisco Miguel", "Morera", None, usuario_4)
