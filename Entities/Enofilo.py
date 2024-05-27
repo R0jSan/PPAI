@@ -1,9 +1,12 @@
+from Usuario import *
+
 class Enofilo:
-    def __init__(self, siguiendo, nombre, apellido, imgPerfil):
+    def __init__(self, siguiendo, nombre, apellido, imgPerfil, usuario=Usuario()):
         self.siguiendo = siguiendo
         self.nombre = nombre
         self.apellido = apellido
         self.imgPerfil = imgPerfil
+        self.usuario = usuario
 
     def seguisABodega(self, bodega):
         return self.siguiendo.sosDeBodega(bodega)
