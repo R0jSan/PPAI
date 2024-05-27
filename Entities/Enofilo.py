@@ -28,7 +28,7 @@ class Enofilo:
         return self.nombre
     
     def getImagenPerfil(self):
-        return self.imagen
+        return self.imgPerfil
 
     def getSiguiendo(self):
         return self.siguiendo
