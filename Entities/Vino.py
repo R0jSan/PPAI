@@ -1,10 +1,12 @@
 class Vino:
-    def __init__(self, bodega, nombre, anio, imgEtiqueta, precioARS):
+    def __init__(self, bodega, nombre, anio, imgEtiqueta, precioARS, maridaje, varietal):
         self.bodega = bodega
         self.nombre = nombre
         self.anio = anio
         self.imgEtiqueta = imgEtiqueta #!
         self.precioARS = precioARS
+        self.maridaje = maridaje
+        self.varietal = varietal
         self.fechaActualizacion = None #!
         self.paraActualizar = False #!
 

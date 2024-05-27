@@ -3,7 +3,10 @@ import sys
 import random
 from PyQt5.QtWidgets import QApplication
 from Entities.Bodega import Bodega
+from Entities.Maridaje import Maridaje
+from Entities.TipoUva import TipoUva
 from Entities.Vino import Vino
+from Entities.varietal import Varietal
 from Interface.PantallaImportacionNovedades import PantallaImportacionNovedades
 from Controllers.GestorImportacionNovedades import GestorImportacionNovedades
 
@@ -78,19 +81,45 @@ if __name__ == '__main__':
     )
 ]
     
+    tiposUva = [
+    TipoUva("Malbec", "Una uva roja de origen francés, famosa en Argentina."),
+    TipoUva("Cabernet Sauvignon", "Una uva roja ampliamente cultivada en todo el mundo."),
+    TipoUva("Chardonnay", "Una uva blanca muy popular utilizada en la producción de vinos espumosos y blancos."),
+    TipoUva("Sauvignon Blanc", "Una uva blanca conocida por su alta acidez y aromas herbáceos."),
+    TipoUva("Syrah", "Una uva roja que produce vinos oscuros y ricos en sabor."),
+]
+    
+    varietales = [
+    Varietal("Varietal 100% Malbec", 100, tiposUva[0]),
+    Varietal("Varietal 80% Cabernet Sauvignon, 20% Merlot", 80, tiposUva[1]),
+    Varietal("Varietal 100% Chardonnay", 100, tiposUva[2]),
+    Varietal("Varietal 90% Sauvignon Blanc, 10% Semillon", 90, tiposUva[3]),
+    Varietal("Varietal 75% Syrah, 25% Grenache", 75, tiposUva[4]),
+]
+    
+    maridajes = [
+    Maridaje("Carne Roja", "Perfecto para acompañar con Malbec o Cabernet Sauvignon."),
+    Maridaje("Pescado", "Ideal para maridar con Sauvignon Blanc o Chardonnay."),
+    Maridaje("Quesos", "Combina bien con una amplia variedad de vinos, especialmente Syrah y Chardonnay."),
+    Maridaje("Postres", "Marida excelente con vinos dulces y espumosos."),
+    Maridaje("Pasta", "Se recomienda acompañar con un buen Merlot o un Cabernet Sauvignon."),
+]
+
+
     vinosMock = [
-    Vino(bodegasMock[0], "Catena Malbec", 2019, "etiqueta_catena_malbec.jpg", 1200),
-    Vino(bodegasMock[0], "Catena Chardonnay", 2020, "etiqueta_catena_chardonnay.jpg", 1300),
-    Vino(bodegasMock[1], "Santa Julia Malbec", 2018, "etiqueta_santa_julia_malbec.jpg", 900),
-    Vino(bodegasMock[1], "Santa Julia Cabernet Sauvignon", 2017, "etiqueta_santa_julia_cabernet.jpg", 1000),
-    Vino(bodegasMock[2], "La Azul Malbec", 2016, "etiqueta_la_azul_malbec.jpg", 800),
-    Vino(bodegasMock[2], "La Azul Blanco", 2021, "etiqueta_la_azul_blanco.jpg", 750),
-    Vino(bodegasMock[3], "Los Toneles Reserva", 2015, "etiqueta_los_toneles_reserva.jpg", 1500),
-    Vino(bodegasMock[3], "Los Toneles Gran Reserva", 2014, "etiqueta_los_toneles_gran_reserva.jpg", 2000)
+    Vino(bodegasMock[0], "Catena Malbec", 2019, "etiqueta_catena_malbec.jpg", 1200, maridajes[0], varietales[0]),
+    Vino(bodegasMock[0], "Catena Chardonnay", 2020, "etiqueta_catena_chardonnay.jpg", 1300, maridajes[1], varietales[2]),
+    Vino(bodegasMock[1], "Santa Julia Malbec", 2018, "etiqueta_santa_julia_malbec.jpg", 900, maridajes[0], varietales[0]),
+    Vino(bodegasMock[1], "Santa Julia Cabernet Sauvignon", 2017, "etiqueta_santa_julia_cabernet.jpg", 1000, maridajes[4], varietales[1]),
+    Vino(bodegasMock[2], "La Azul Malbec", 2016, "etiqueta_la_azul_malbec.jpg", 800, maridajes[2], varietales[0]),
+    Vino(bodegasMock[2], "La Azul Blanco", 2021, "etiqueta_la_azul_blanco.jpg", 750, maridajes[1], varietales[3]),
+    Vino(bodegasMock[3], "Los Toneles Reserva", 2015, "etiqueta_los_toneles_reserva.jpg", 1500, maridajes[2], varietales[4]),
+    Vino(bodegasMock[3], "Los Toneles Gran Reserva", 2014, "etiqueta_los_toneles_gran_reserva.jpg", 2000, maridajes[2], varietales[4])
 ]
     
     for vino in vinosMock:
         vino.bodega.vinos.append(vino)
+
     
     gestor.bodegas = bodegasMock
 
