@@ -3,15 +3,15 @@ import datetime
 
 
 class Bodega:
-    def __init__(self, fechaUltimaActualizacion, region, nombre, periodoActualizacion, historia, descripcion, coordUbi=str()):
-        self.region = region
-        self.vinos = []
-        self.nombre = nombre
-        self.periodoActualizacion = periodoActualizacion #!
+    def __init__(self, fechaUltimaActualizacion, region, nombre, periodoActualizacion, historia, descripcion, coordUbi):
         self.fechaUltimaActualizacion = fechaUltimaActualizacion
+        self.region = region
+        self.nombre = nombre
+        self.periodoActualizacion = periodoActualizacion
         self.historia = historia
         self.descripcion = descripcion
         self.coordUbi = coordUbi
+        self.vinos = []
 
     def addVino(self, vino):
         self.vinos.append(vino)
