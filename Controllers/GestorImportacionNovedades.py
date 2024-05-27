@@ -1,15 +1,23 @@
+from Interface.InterfazApiBodega import InterfazApiBodega
+from Interface.PantallaImportacionNovedades import PantallaImportacionNovedades
+
 class GestorImportacionNovedades:
 
-    def __init__(self):
+    def __init__(self,pantallaImportacionNovedades):
         self.bodegas = []
         self.bodegasActualizables = []
-        self.NombreBodegasActualizables = []
+        self.nombreBodegasActualizables = []
+        self.pantallaImportacionNovedades = pantallaImportacionNovedades
 
     def opcionImportarActualizacionVinos(self):
-        pass
+        self.buscarBodegasActualizables()
+        self.pantallaImportacionNovedades.mostrarBodegasActualizables(self.nombreBodegasActualizables)
+        bodegaSeleccionada = self.pantallaImportacionNovedades.tomarBodegasSeleccionada()
+        actualizacionesVinos = self.obtenerActVinosBodegaSeleccionada(bodegaSeleccionada)
+        self.obtenerVinosActualizables(bodegaSeleccionada)
 
 
-    def BuscarBodegasActualizables(self):
+    def buscarBodegasActualizables(self):
 
         #Busca desde las bodegas que estan en periodo de actualizacion, las guarda en la lista bodegasActualizables junto a su nombre
         # en la lista NombreBodegasActualizables (los cuales deberian tener el mismo indice)
@@ -18,9 +26,12 @@ class GestorImportacionNovedades:
 
             if bodega.sePuedeActualizarNovedades():
                 self.bodegasActualizables.append(bodega)
-                self.NombreBodegasActualizables.append(bodega.getNombre())
+                self.nombreBodegasActualizables.append(bodega.getNombre())
 
-    def buscarActualizacionesVinos():
+    def obtenerActVinosBodegaSeleccionada(self, bodegaSeleccionada):
+        return InterfazApiBodega().obtenerActualizacionesVinos(bodegaSeleccionada)
+    
+    def obtenerVinosActualizables(self, bodegaSeleccionada):
         pass
 
     def determinarVinosActualizar():

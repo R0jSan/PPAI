@@ -137,6 +137,7 @@ class PantallaImportacionNovedades(QMainWindow):
             self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
             bodegaseleccionada = selectedItems
             self.stacked_widget.setCurrentIndex(2)
+            return bodegaseleccionada
         else:
             adv = QMessageBox()
             adv.setWindowTitle("Error")

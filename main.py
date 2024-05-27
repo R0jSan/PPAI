@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     for i in range(20):
         bodega = MockBodega("Nombre Bodega" + str(i), random.choice([True, False]))
-        gestor.bodegas.append()
+        gestor.bodegas.append(bodega)
 
     # Mostrar la pantalla y ejecutar el método del gestor
     pantalla.show()
