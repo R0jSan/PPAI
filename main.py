@@ -1,5 +1,6 @@
 import sys
 import random
+from Interface.style.styles import stylesheet_global
 from PyQt5.QtWidgets import QApplication
 from Interface.PantallaImportacionNovedades import PantallaImportacionNovedades
 from Controllers.GestorImportacionNovedades import GestorImportacionNovedades
@@ -15,34 +16,10 @@ class MockBodega:
     def getNombre(self):
         return self.nombre
 
-stylesheet = """
-    QLabel {
-        background-color: transparent;
-        color: white;
-        padding: 5px;
-    }
-    QPushButton {
-        font-size: 20px;
-        background-color: white;
-        color: black;
-        border-radius: 15px;
-        height: 70px;
-        width: 350px;
-    }
-    QPushButton:hover {
-        background-color: #8ff8ff
-    }
-    QListWidget {
-        font-size: 15px;
-        color: black;
-    }
-    }
-"""
-
 if __name__ == '__main__':
     # Crear una instancia de QApplication antes de cualquier widget
     app = QApplication(sys.argv)
-    app.setStyleSheet(stylesheet)
+    app.setStyleSheet(stylesheet_global)
     pantalla = PantallaImportacionNovedades()
     gestor = GestorImportacionNovedades(pantalla)
     

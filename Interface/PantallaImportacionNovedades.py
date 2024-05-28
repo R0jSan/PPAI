@@ -1,5 +1,5 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
+from Interface.style import styles
+from PyQt5.QtGui import  QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import *
 
 class PantallaImportacionNovedades(QMainWindow):
@@ -9,24 +9,21 @@ class PantallaImportacionNovedades(QMainWindow):
         self.setFixedSize(390, 695) 
 
         # Imagen de fondo
-        pixmap = QPixmap('bonvino.png')
-        palette = self.palette()
-        palette.setBrush(QPalette.Window, QBrush(pixmap))
-        self.setPalette(palette)
+        self.definir_fondo("Interface\\style\\bonvino.png")
 
-        # Ventana principal (menu)
+        # Ventana principal
         self.central_widget = QWidget()
         self.layout = QVBoxLayout(self.central_widget)
         self.setCentralWidget(self.central_widget)
-        
         self.stacked_widget = QStackedWidget()
         self.layout.addWidget(self.stacked_widget)
 
-        # Crea las ventanas "menu principal" y "importacion de vinos"
+        # Crea las ventanas "menu principal", "importacion de vinos" y "bodega seleccionada"
         self.menu_principal_widget = self.menu_principal_widget()
         self.importacion_vinos_widget = self.importacion_vinos_widget()
         self.bodega_seleccionada_widget = self.bodega_seleccionada_widget()
 
+        # Añade cada ventana a la "pila"
         self.stacked_widget.addWidget(self.menu_principal_widget)
         self.stacked_widget.addWidget(self.importacion_vinos_widget)
         self.stacked_widget.addWidget(self.bodega_seleccionada_widget)
@@ -44,26 +41,14 @@ class PantallaImportacionNovedades(QMainWindow):
         placeholder1_button = QPushButton("-")
         placeholder2_button = QPushButton("-")
 
-        bon_vino_label.setFont(QFont("PMingLiU-ExtB", 50))
-        bon_vino_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-        
-        main_menu_label.setFont(QFont("PMingLiU-ExtB", 15))
-        main_menu_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        widgets = [bon_vino_label, main_menu_label, importar_vinos_button, placeholder1_button, placeholder2_button]
 
-        layout.addWidget(bon_vino_label)
-        layout.addWidget(main_menu_label)
+        styles.alinear(bon_vino_label, styles.TITLE_SIZE)
+        styles.alinear(main_menu_label, styles.LABEL_SIZE)
 
-        layout_botones = QVBoxLayout()
-        layout_botones.addWidget(importar_vinos_button)
-        layout_botones.addWidget(placeholder1_button)
-        layout_botones.addWidget(placeholder2_button)
+        styles.crearlayout(widgets, layout)
 
-        layout.addLayout(layout_botones)
-        layout.setSpacing(25)
-        
         importar_vinos_button.clicked.connect(self.mostrar_importacion_vinos)
-
-        widget.setLayout(layout)
         return widget
 
     def importacion_vinos_widget(self):
@@ -73,33 +58,20 @@ class PantallaImportacionNovedades(QMainWindow):
         bon_vino_label = QLabel("BON VINO")
         menu_importar_label = QLabel("Menu Importar Actualización de Vinos")
         bodegas_actualizables_label = QLabel("Bodegas con actualizaciones pendientes:")
-
         self.bodegas_actualizables_list = QListWidget()
-
         self.seleccionar_bodega_button = QPushButton("Seleccionar Bodega")
         volver_button = QPushButton("Volver")
 
+        widgets = [bon_vino_label, menu_importar_label, bodegas_actualizables_label, self.bodegas_actualizables_list, self.seleccionar_bodega_button, volver_button]
 
-        bon_vino_label.setFont(QFont("PMingLiU-ExtB", 50))
-        bon_vino_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        styles.alinear(bon_vino_label, styles.TITLE_SIZE)
+        styles.alinear(menu_importar_label, styles.LABEL_SIZE)
+        styles.alinear(bodegas_actualizables_label, styles.LABEL_SIZE)
 
-        menu_importar_label.setFont(QFont("PMingLiU-ExtB", 15))
-        menu_importar_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-
-        bodegas_actualizables_label.setFont(QFont("PMingLiU-ExtB", 15))
-        bodegas_actualizables_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-
-        layout.addWidget(bon_vino_label)
-        layout.addWidget(menu_importar_label)
-        layout.addWidget(bodegas_actualizables_label)
-        layout.addWidget(self.bodegas_actualizables_list)
-        layout.addWidget(self.seleccionar_bodega_button)
-        layout.addWidget(volver_button)
+        styles.crearlayout(widgets, layout)
 
         self.seleccionar_bodega_button.clicked.connect(self.tomarBodegasSeleccionada)
         volver_button.clicked.connect(self.mostrar_menu_principal)
-
-        widget.setLayout(layout)
         return widget
 
     def bodega_seleccionada_widget(self):
@@ -111,53 +83,25 @@ class PantallaImportacionNovedades(QMainWindow):
         vinos_actualizados_label = QLabel("Vinos actualizados: ")
         lista_vinos = QListWidget()
         volver_button = QPushButton("Volver")
+        widgets = [bon_vino_label, self.bodega_label, vinos_actualizados_label, lista_vinos, volver_button]
 
-        bon_vino_label.setFont(QFont("PMingLiU-ExtB", 50))
-        bon_vino_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
+        styles.alinear(bon_vino_label, styles.TITLE_SIZE)
+        styles.alinear(self.bodega_label, styles.LABEL_SIZE)
+        styles.alinear(vinos_actualizados_label, styles.LABEL_SIZE)
 
-        self.bodega_label.setFont(QFont("PMingLiU-ExtB", 15))
-        self.bodega_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-
-        vinos_actualizados_label.setFont(QFont("PMingLiU-ExtB", 15))
-        self.bodega_label.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
-
-        layout.addWidget(bon_vino_label)
-        layout.addWidget(self.bodega_label)
-        layout.addWidget(vinos_actualizados_label)
-        layout.addWidget(lista_vinos)
-        layout.addWidget(volver_button)
+        styles.crearlayout(widgets, layout)    
 
         volver_button.clicked.connect(self.mostrar_importacion_vinos)
-
         return widget
 
     def tomarBodegasSeleccionada(self):  
         selectedItems = self.bodegas_actualizables_list.selectedItems()
         if selectedItems:
             self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
-            bodegaseleccionada = selectedItems
+            # bodegaseleccionada = selectedItems
             self.stacked_widget.setCurrentIndex(2)
         else:
-            adv = QMessageBox()
-            adv.setWindowTitle("Error")
-            adv.setText("Seleccione una bodega")
-            stylesheet_adv = '''
-                            QLabel { 
-                                color: black; 
-                                }
-                            QPushButton {
-                                font-size: 15px; 
-                                background-color: white; 
-                                color: black; 
-                                border-radius: 2px; 
-                                height: 25px; 
-                                width: 160px; 
-                                }
-                            QPushButton:hover {
-                                background-color: #8ff8ff
-                                }'''
-            adv.setStyleSheet(stylesheet_adv)
-            adv.exec_()
+            styles.crear_error_box("Error", "Seleccione una bodega")
             
     def mostrarBodegasActualizables(self, bodegas):
         self.bodegas_actualizables_list.clear()
@@ -169,32 +113,16 @@ class PantallaImportacionNovedades(QMainWindow):
     def mostrar_menu_principal(self):
         self.stacked_widget.setCurrentIndex(0)
 
+    def definir_fondo(self, img):
+        pixmap = QPixmap(img)
+        palette = self.palette()
+        palette.setBrush(QPalette.Window, QBrush(pixmap))
+        self.setPalette(palette)
+
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
+    app.setStyleSheet(styles.stylesheet_global)
     window = PantallaImportacionNovedades()
     window.show()
     sys.exit(app.exec_())
-
-stylesheet = """
-    QLabel {
-        background-color: transparent;
-        color: black;
-        padding: 5px;
-    }
-    QPushButton {
-        font-size: 20px;
-        background-color: white;
-        color: black;
-        border-radius: 30px;
-        height: 70px;
-        width: 350px;
-    }
-    QPushButton:hover {
-        background-color: #8ff8ff
-    }
-    QListWidget {
-        
-    }
-    }
-"""
