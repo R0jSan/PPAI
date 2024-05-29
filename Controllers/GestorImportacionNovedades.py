@@ -99,12 +99,12 @@ class GestorImportacionNovedades:
     def actualizarOCrearVinos(self, bodegaSeleccionada, vinosActualizables):
         for vino in vinosActualizables:
             if bodegaSeleccionada.tenesEsteVino(vino):
-                self.actualizarCaracteristicasVinoExistente(vino)
+                self.actualizarCaracteristicasVinoExistente(vino,bodegaSeleccionada)
             else:
                 self.crearVino(vino)
     
-    def actualizarCaracteristicasVinoExistente(self, vino):
-        self.apiBodega.actualizarDatosVino(vino)
+    def actualizarCaracteristicasVinoExistente(self, vino,bodega):
+        bodega.actualizarDatosVino(vino)
 
     def determinarVinosActualizar(self):
         pass
@@ -113,8 +113,7 @@ class GestorImportacionNovedades:
         # Crear un nuevo vino en la bodega seleccionada
         maridaje = self.buscarMaridaje(vino.maridaje)
         varietal = self.buscarTipoUva(vino.varietal.tipoUva)
-        self.crearVinos(vino, maridaje, varietal)
-        vinoNuevo = Vino(vino.bodega, vino.nombre, vino.anio, vino.imgEtiqueta, vino.precioARS, vino.maridaje, vino.varietal, vino.notaCata)
+        vinoNuevo =self.crearVinos(vino, maridaje, varietal)
         vino.bodega.addVino(vinoNuevo)
 
     def buscarMaridaje(self, maridajeB): #maridajeB es el maridaje que hay que buscar

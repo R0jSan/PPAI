@@ -24,13 +24,6 @@ class InterfazApiBodega:
         
         return vinos_actualizados
     
-    def actualizarDatosVino(self, vinoActualizar):
-        for vino in self.vinos:
-            if vino.sosVinoParaActualizar(vinoActualizar):
-                vino.setPrecio(vinoActualizar.precioARS)
-                vino.setNotaCata(vinoActualizar.notaCata)
-                vino.setimgEtiqueta(vinoActualizar.imgEtiqueta)
-                vino.setFechaActualizacion(datetime.datetime.now())
 
     def setFechaActualizacion(self, fechaActualizacion):
         self.fechaActualizacion = fechaActualizacion
