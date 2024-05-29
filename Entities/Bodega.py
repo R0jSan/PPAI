@@ -3,15 +3,15 @@ import datetime
 
 
 class Bodega:
-    def __init__(self, fechaUltimaActualizacion, region, nombre, periodoActualizacion, historia, descripcion, coordUbi=str()):
-        self.region = region
-        self.vinos = []
-        self.nombre = nombre
-        self.periodoActualizacion = periodoActualizacion #!
+    def __init__(self, fechaUltimaActualizacion, region, nombre, periodoActualizacion, historia, descripcion, coordUbi):
         self.fechaUltimaActualizacion = fechaUltimaActualizacion
+        self.region = region
+        self.nombre = nombre
+        self.periodoActualizacion = periodoActualizacion
         self.historia = historia
         self.descripcion = descripcion
         self.coordUbi = coordUbi
+        self.vinos = []
 
     def addVino(self, vino):
         self.vinos.append(vino)
@@ -58,12 +58,14 @@ class Bodega:
     def setPeriodoActualizacion(self, valor):
         self.periodoActuaizacion = valor
 
-    # 
+    def sePuedeActualizarNovedades(self, fechaActual):
 
-    def sePuedeActualizarNovedades(self):
-
-     #funcion que retorna true o false si a transcurrido el perriodo de actualizacion, toma la fecha actual y compara la diferencia 
+     # funcion que retorna true o false si a transcurrido el periodo de actualizacion, toma la fecha actual y compara la diferencia 
      #de meses con el periodo de actualizacion   
-        
-        diferencia = datetime.datetime.now() -  self.fechaUltimaActualizacion
+        diferencia = fechaActual -  self.fechaUltimaActualizacion
         return self.periodoActualizacion <= (diferencia.days/30)
+    
+    def tenesEsteVino(self, vino):
+        for vino in self.vinos:
+            vino.sosEsteVino(vino.nombre)
+

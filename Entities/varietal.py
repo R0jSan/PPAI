@@ -1,4 +1,4 @@
-from TipoUva import TipoUva
+from Entities.TipoUva import TipoUva
 
 class Varietal():
     def __init__(self, descripcion=str(), porcentajeUva=float(), tipoUva=TipoUva('','')):

@@ -1,7 +1,7 @@
 from Interface.style import styles
 from PyQt5.QtGui import  QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import *
-
+from Controllers.GestorImportacionNovedades import GestorImportacionNovedades
 class PantallaImportacionNovedades(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -81,9 +81,9 @@ class PantallaImportacionNovedades(QMainWindow):
         bon_vino_label = QLabel("BON VINO")
         self.bodega_label = QLabel()
         vinos_actualizados_label = QLabel("Vinos actualizados: ")
-        lista_vinos = QListWidget()
+        self.lista_vinos = QListWidget()
         volver_button = QPushButton("Volver")
-        widgets = [bon_vino_label, self.bodega_label, vinos_actualizados_label, lista_vinos, volver_button]
+        widgets = [bon_vino_label, self.bodega_label, vinos_actualizados_label, self.lista_vinos, volver_button]
 
         styles.alinear(bon_vino_label, styles.TITLE_SIZE)
         styles.alinear(self.bodega_label, styles.LABEL_SIZE)
@@ -94,15 +94,31 @@ class PantallaImportacionNovedades(QMainWindow):
         volver_button.clicked.connect(self.mostrarVentanaImportacionVinos)
         return widget
 
+
+    """
+    Funcion tomarBodegasSeleccionada() devuelve un array con objetos QListWidgetItem
+    Al aplicarle .text() a cada objeto voy a obtener el nombre de la bodega y así buscar las seleccionadas en el gestor
+    """
     def tomarBodegasSeleccionada(self):  
         selectedItems = self.bodegas_actualizables_list.selectedItems()
         if selectedItems:
-            self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
-            self.mostrarVentanaBodegaSeleccionada()
-            return selectedItems
+            for item in selectedItems:
+            # self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
+            # self.mostrarVentanaBodegaSeleccionada()
+                bodegasSeleccionadas = []
+                bodegasSeleccionadas.append(item)
+
+            # return selectedItems[0]
+            # return selectedItems[0].text() # Agregado
+            return bodegasSeleccionadas
         else:
             styles.crearBox("Error", "Seleccione una bodega")
-            
+
+    """
+    funcion mostrarBodegasActualizables()
+    Recibe como parametro las bodegas que tienen actualizaciones disponibles.
+    El parametro bodegas es un array
+    """      
     def mostrarBodegasActualizables(self, bodegas):
         self.bodegas_actualizables_list.clear()
         self.bodegas_actualizables_list.addItems(bodegas)
@@ -121,3 +137,9 @@ class PantallaImportacionNovedades(QMainWindow):
         palette = self.palette()
         palette.setBrush(QPalette.Window, QBrush(pixmap))
         self.setPalette(palette)
+
+    def mostrarVinosActualizados(self, bodega, vinos):
+        self.bodega_label.setText(f"Bodega: {bodega.getNombre()}")
+        self.lista_vinos.clear()
+        for vino in vinos:
+            self.lista_vinos.addItem(f"Nombre: {vino.nombre}, Año: {vino.anio}, Precio: {vino.precioARS}, Maridaje: {vino.maridaje}, Varietal: {vino.varietal}, Nota de cata: {vino.notaCata}")
