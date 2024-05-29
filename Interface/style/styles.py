@@ -6,14 +6,14 @@ FONT = "PMingLiU-ExtB"
 TITLE_SIZE = 50
 LABEL_SIZE = 15
 
-def crear_error_box(title, text):
+def crearBox(title, text):
     error_box = QMessageBox()
     error_box.setWindowTitle(title)
     error_box.setText(text)
     error_box.setStyleSheet(stylesheet_error_box)
     error_box.exec_()
 
-def crearlayout(widgetlist, layout):
+def crearLayout(widgetlist, layout):
     for widget in widgetlist:
         layout.addWidget(widget)
 
@@ -47,7 +47,7 @@ stylesheet_global = """
         font-size: 20px;
         background-color: white;
         color: black;
-        border-radius: 30px;
+        border-radius: 15px;
         height: 70px;
         width: 350px;
     }
