@@ -1,8 +1,8 @@
-from Usuario import *
+from Entities.Usuario import Usuario
 
 class Enofilo:
-    def __init__(self, siguiendo, nombre, apellido, imgPerfil, usuario=Usuario()):
-        self.siguiendo = siguiendo
+    def __init__(self, nombre, apellido, imgPerfil, usuario=Usuario()):
+        self.siguiendo = []
         self.nombre = nombre
         self.apellido = apellido
         self.imgPerfil = imgPerfil
@@ -12,7 +12,7 @@ class Enofilo:
         return self.siguiendo.sosDeBodega(bodega)
 
     def getNombreUsuario(self):
-        return self.nombre
+        return self.usuario.getNombre()
     
     # Métodos set
     def setApellido(self, apellido):

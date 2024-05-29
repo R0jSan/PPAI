@@ -2,7 +2,6 @@ from Entities.Vino import Vino
 from Interface.InterfazApiBodega import InterfazApiBodega
 from datetime import datetime
 
-
 class GestorImportacionNovedades:
     def __init__(self, pantallaImportacionNovedades):
         self.bodegas = [] # Son todas la bodegas
@@ -13,6 +12,7 @@ class GestorImportacionNovedades:
         self.vinosActualizables = [] # Los vinos que se van a actualizar
         self.fechaActual = None # Es la fecha actual calculada por el gestor
         self.bodegaSeleccionPantalla = []
+        self.enofilos = []
 
     """
     funcion opcionImportarActualizacionVinos()
@@ -66,6 +66,10 @@ class GestorImportacionNovedades:
                         self.pantallaImportacionNovedades.mostrarVinosActualizados(bodega, self.vinosActualizables)
                         self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)  # Cambiar a la vista de vinos actualizados
 
+    """
+    Funcion obtenerActVinosBodegaSeleccionada()
+    devuelve un array con lo vinos actualizados que tiene la API
+    """
     def obtenerActVinosBodegaSeleccionada(self, bodegaSeleccionada):
         return InterfazApiBodega().obtenerActualizacionesVinos(bodegaSeleccionada)
     """
@@ -75,6 +79,11 @@ class GestorImportacionNovedades:
             if bodegaSeleccionada.sosEsteVino(vino): # Modificado
                 vinosActualizables.append(vino)
         self.vinosActualizables = vinosActualizables
+    """
+
+    """
+    funcion obtenerVinosActualizables()
+    El parametro "actualizacionesVinos" contiene un array con los vinos a modificar
     """
     def obtenerVinosActualizables(self, actualizacionesVinos, bodega):
         vinosActualizables = []
@@ -106,5 +115,11 @@ class GestorImportacionNovedades:
         for maridaje in self.maridajes:
             maridaje.sosMaridaje() 
 
-    def buscarSeguidoresBodega(self):
-        pass
+    def buscarSeguidoresBodega(self, bodegasActualizadas):
+        nombresUsuarios = []
+        for enofilo in self.enofilos:
+            for bodega in bodegasActualizadas:
+                if enofilo.seguisABodega(bodega):
+                    nombresUsuarios.append(enofilo.getNombreUsuario())
+
+        return nombresUsuarios

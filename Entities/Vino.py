@@ -35,6 +35,7 @@ class Vino:
     def setFechaActualiz(self, nuevaFecha):
         self.fechaActualizacion = nuevaFecha
 
+    """
     def mostrarVino(self, bodega):
         print('Nombre: ' + str(self.nombre)
               + '\nAño: ' + str(self.anio)
@@ -43,3 +44,4 @@ class Vino:
               + '\nBodega: ' + str(bodega.nombre)
               + '\nRegión: ' + str(bodega.region)
               + '\n' +'-'*80)
+    """

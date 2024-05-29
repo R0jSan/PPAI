@@ -1,7 +1,6 @@
 import datetime
 
 
-
 class Bodega:
     def __init__(self, fechaUltimaActualizacion, region, nombre, periodoActualizacion, historia, descripcion, coordUbi):
         self.fechaUltimaActualizacion = fechaUltimaActualizacion
@@ -65,6 +64,12 @@ class Bodega:
         diferencia = fechaActual -  self.fechaUltimaActualizacion
         return self.periodoActualizacion <= (diferencia.days/30)
     
+    """
+    Funcion tenesEsteVino()
+    Recibe como parámetro un objeto de tipo Vino
+    self.vino es un atributo de la clase Bodega y contiene un array con todos los vinos de la bodega
+    sosEsteVino es un método de la clase Vino y devuelve True en caso de serlo
+    """
     def tenesEsteVino(self, vino):
         for vino in self.vinos:
             vino.sosEsteVino(vino.nombre)

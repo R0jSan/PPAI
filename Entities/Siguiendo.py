@@ -1,11 +1,12 @@
 class Siguiendo:
-    def __init__(self, bodega, fechaFin, fechaInicio):
+    def __init__(self, bodega, fechaInicio):
         self.bodega = bodega
-        self.fechaFin = fechaFin
+        self.fechaFin = None
         self.fechaInicio = fechaInicio
 
     def sosDeBodega(self, bodegaComparar):
         return self.bodega == bodegaComparar
+
     
     def setFechaFin(self,fechaFin):
         self.fechaFin = fechaFin

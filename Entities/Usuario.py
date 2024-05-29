@@ -12,3 +12,6 @@ class Usuario:
     
     def esTuUsuario(self,nombre):
         return self.nombre == nombre
+    
+    def getNombre(self):
+        return self.nombre

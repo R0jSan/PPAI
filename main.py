@@ -7,8 +7,12 @@ from Entities.Maridaje import Maridaje
 from Entities.TipoUva import TipoUva
 from Entities.Vino import Vino
 from Entities.varietal import Varietal
+from Entities.Usuario import Usuario
+from Entities.Enofilo import Enofilo
+from Entities.Siguiendo import Siguiendo
 from Interface.PantallaImportacionNovedades import PantallaImportacionNovedades
 from Controllers.GestorImportacionNovedades import GestorImportacionNovedades
+
 
 stylesheet = """
     QLabel {
@@ -121,10 +125,25 @@ if __name__ == '__main__':
     for vino in vinosMock:
         vino.bodega.vinos.append(vino)
 
+    # Usuarios
+    usuario_1 = Usuario("ME_Jimenez", "contraseña1")
+    usuario_2 = Usuario("David84", "constraseña2")
+    usuario_3 = Usuario("Mica_Navarrete92", "constraseña3")
+    usuario_4 = Usuario("Fran_89", "constraseña4")
+
+    # Enófilos
+    listaEnofilos = [
+    Enofilo("María Elena", "Jimenez", None, usuario_1),
+    Enofilo("David", "Iglesias", None, usuario_2),
+    Enofilo("Micaela", "Navarrete", None, usuario_3),
+    Enofilo("Francisco Miguel", "Morera", None, usuario_4)]
+
+    for i in range(len(listaEnofilos)):
+        listaEnofilos[i].siguiendo.append(Siguiendo(bodegasMock[i], datetime.datetime.now()))
     
     gestor.bodegas = bodegasMock
     gestor.maridajes = maridajes
-
+    gestor.enofilos = listaEnofilos
     # Mostrar la pantalla y ejecutar el método del gestor
     pantalla.show()
     gestor.opcionImportarActualizacionVinos()
