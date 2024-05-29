@@ -19,9 +19,9 @@ class PantallaImportacionNovedades(QMainWindow):
         self.layout.addWidget(self.stacked_widget)
 
         # Crea las ventanas "menu principal", "importacion de vinos" y "bodega seleccionada"
-        self.menu_principal_widget = self.menu_principal_widget()
-        self.importacion_vinos_widget = self.importacion_vinos_widget()
-        self.bodega_seleccionada_widget = self.bodega_seleccionada_widget()
+        self.menu_principal_widget = self.ventanaMenuPrincipal()
+        self.importacion_vinos_widget = self.ventanaImportacionVinos()
+        self.bodega_seleccionada_widget = self.ventanaBodegaSeleccionada()
 
         # Añade cada ventana a la "pila"
         self.stacked_widget.addWidget(self.menu_principal_widget)
@@ -30,7 +30,7 @@ class PantallaImportacionNovedades(QMainWindow):
 
         self.stacked_widget.setCurrentIndex(0)  #Las "ventanas" son capas apiladas, la 0 es el menu principal 
 
-    def menu_principal_widget(self):
+    def ventanaMenuPrincipal(self):
         # Layout del menu principal
         widget = QWidget()
         layout = QVBoxLayout(widget)
@@ -48,10 +48,10 @@ class PantallaImportacionNovedades(QMainWindow):
 
         styles.crearlayout(widgets, layout)
 
-        importar_vinos_button.clicked.connect(self.mostrar_importacion_vinos)
+        importar_vinos_button.clicked.connect(self.mostrarVentanaImportacionVinos)
         return widget
 
-    def importacion_vinos_widget(self):
+    def ventanaImportacionVinos(self):
         widget = QWidget()
         layout = QVBoxLayout(widget)
 
@@ -71,10 +71,10 @@ class PantallaImportacionNovedades(QMainWindow):
         styles.crearlayout(widgets, layout)
 
         self.seleccionar_bodega_button.clicked.connect(self.tomarBodegasSeleccionada)
-        volver_button.clicked.connect(self.mostrar_menu_principal)
+        volver_button.clicked.connect(self.mostrarVentanaMenuPrincipal)
         return widget
 
-    def bodega_seleccionada_widget(self):
+    def ventanaBodegaSeleccionada(self):
         widget = QWidget()
         layout = QVBoxLayout(widget)
 
@@ -91,15 +91,14 @@ class PantallaImportacionNovedades(QMainWindow):
 
         styles.crearlayout(widgets, layout)    
 
-        volver_button.clicked.connect(self.mostrar_importacion_vinos)
+        volver_button.clicked.connect(self.mostrarVentanaImportacionVinos)
         return widget
 
     def tomarBodegasSeleccionada(self):  
         selectedItems = self.bodegas_actualizables_list.selectedItems()
         if selectedItems:
             self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
-            # bodegaseleccionada = selectedItems
-            self.stacked_widget.setCurrentIndex(2)
+            self.mostrarVentanaBodegaSeleccionada()
         else:
             styles.crear_error_box("Error", "Seleccione una bodega")
             
@@ -107,22 +106,17 @@ class PantallaImportacionNovedades(QMainWindow):
         self.bodegas_actualizables_list.clear()
         self.bodegas_actualizables_list.addItems(bodegas)
 
-    def mostrar_importacion_vinos(self):
-        self.stacked_widget.setCurrentIndex(1) 
-
-    def mostrar_menu_principal(self):
+    def mostrarVentanaMenuPrincipal(self):
         self.stacked_widget.setCurrentIndex(0)
+
+    def mostrarVentanaImportacionVinos(self):
+        self.stacked_widget.setCurrentIndex(1)
+    
+    def mostrarVentanaBodegaSeleccionada(self):
+        self.stacked_widget.setCurrentIndex(2)
 
     def definir_fondo(self, img):
         pixmap = QPixmap(img)
         palette = self.palette()
         palette.setBrush(QPalette.Window, QBrush(pixmap))
         self.setPalette(palette)
-
-if __name__ == "__main__":
-    import sys
-    app = QApplication(sys.argv)
-    app.setStyleSheet(styles.stylesheet_global)
-    window = PantallaImportacionNovedades()
-    window.show()
-    sys.exit(app.exec_())
