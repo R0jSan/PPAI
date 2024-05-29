@@ -96,11 +96,12 @@ class PantallaImportacionNovedades(QMainWindow):
 
     def tomarBodegasSeleccionada(self):  
         selectedItems = self.bodegas_actualizables_list.selectedItems()
-        if not selectedItems:
+        if selectedItems:
+            self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
+            self.mostrarVentanaBodegaSeleccionada()
+            return selectedItems
+        else:
             styles.crearBox("Error", "Seleccione una bodega")
-        self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
-        self.mostrarVentanaBodegaSeleccionada()
-        return selectedItems
             
     def mostrarBodegasActualizables(self, bodegas):
         self.bodegas_actualizables_list.clear()
