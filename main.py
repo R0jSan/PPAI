@@ -11,37 +11,13 @@ from Entities.Usuario import Usuario
 from Entities.Enofilo import Enofilo
 from Entities.Siguiendo import Siguiendo
 from Interface.PantallaImportacionNovedades import PantallaImportacionNovedades
+from Interface.style import styles
 from Controllers.GestorImportacionNovedades import GestorImportacionNovedades
-
-
-stylesheet = """
-    QLabel {
-        background-color: transparent;
-        color: white;
-        padding: 5px;
-    }
-    QPushButton {
-        font-size: 20px;
-        background-color: white;
-        color: black;
-        border-radius: 15px;
-        height: 70px;
-        width: 350px;
-    }
-    QPushButton:hover {
-        background-color: #8ff8ff
-    }
-    QListWidget {
-        font-size: 15px;
-        color: black;
-    }
-    }
-"""
 
 if __name__ == '__main__':
     # Crear una instancia de QApplication antes de cualquier widget
     app = QApplication(sys.argv)
-    app.setStyleSheet(stylesheet)
+    app.setStyleSheet(styles.stylesheet_global)
     pantalla = PantallaImportacionNovedades()
     # Al gestor le asigna la variable pantalla
     gestor = GestorImportacionNovedades(pantalla)
