@@ -5,6 +5,7 @@ from Entities.Vino import Vino
 class InterfazApiBodega:
     def __init__(self):
         self.vinos = []
+        self.fechaActualizacion = None
 
     def obtenerActualizacionesVinos(self, bodega):
         # Simula la obtención de actualizaciones de vinos con datos completos
@@ -30,3 +31,6 @@ class InterfazApiBodega:
                 vino.setNotaCata(vinoActualizar.notaCata)
                 vino.setimgEtiqueta(vinoActualizar.imgEtiqueta)
                 vino.setFechaActualizacion(datetime.datetime.now())
+
+    def setFechaActualizacion(self, fechaActualizacion):
+        self.fechaActualizacion = fechaActualizacion

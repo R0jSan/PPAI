@@ -1,3 +1,6 @@
+from Entities.varietal import Varietal
+
+
 class Vino:
     def __init__(self, bodega, nombre, anio, imgEtiqueta, precioARS, maridaje, varietal, notaCata):
         self.bodega = bodega
@@ -11,11 +14,9 @@ class Vino:
         self.paraActualizar = False #!
         self.notaCata = notaCata
 
-    def crearVino():
-        pass
-
-    def crearVarietal():
-        pass
+    def crearVarietal(self, descripcion, porcentajeUva, tipoUva):
+        nuevo_varietal = Varietal(descripcion, porcentajeUva, tipoUva)
+        self.varietal = nuevo_varietal
 
     def sosDeBodega(self, bodegaComparar):
         return self.bodega == bodegaComparar

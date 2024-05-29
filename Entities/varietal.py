@@ -1,7 +1,7 @@
 from Entities.TipoUva import TipoUva
 
 class Varietal():
-    def __init__(self, descripcion=str(), porcentajeUva=float(), tipoUva=TipoUva('','')):
+    def __init__(self, descripcion, porcentajeUva, tipoUva):
         self.descripcion = descripcion
         self.porcentajeUva = porcentajeUva
         self.tipoUva = tipoUva
@@ -24,12 +24,12 @@ class Varietal():
     
     #set
     
-    def setDescripcion(self, valor=str()):
+    def setDescripcion(self, valor):
         self.descripcion = valor
 
-    def setPorcentajeUva(self, valor=float()):
+    def setPorcentajeUva(self, valor):
         self.porcentajeUva = valor
 
-    def setTipoUva(self, valor=TipoUva('','')):
+    def setTipoUva(self, valor):
         self.tipoUva = valor
         

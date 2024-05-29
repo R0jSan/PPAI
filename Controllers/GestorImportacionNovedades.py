@@ -3,12 +3,14 @@ from Interface.InterfazApiBodega import InterfazApiBodega
 from datetime import datetime
 
 class GestorImportacionNovedades:
+    apiBodega = InterfazApiBodega() # no se donde iria esto
     def __init__(self, pantallaImportacionNovedades):
         self.bodegas = [] # Son todas la bodegas
         self.bodegasActualizables = [] # Son las bodegas que se pueden actualizar
         self.nombreBodegasActualizables = [] # Son el nombre de las bodegas que se pueden actualizar
         self.pantallaImportacionNovedades = pantallaImportacionNovedades # Es la pantalla
         self.maridajes = []
+        self.tiposUvas = []
         self.vinosActualizables = [] # Los vinos que se van a actualizar
         self.fechaActual = None # Es la fecha actual calculada por el gestor
         self.bodegaSeleccionPantalla = []
@@ -55,6 +57,7 @@ class GestorImportacionNovedades:
     """
     def procesarBodegaSeleccionada(self):
         # self.bodegaSeleccionPantalla es un array de objetos QListWidgetItem, tengo que aplicarle .text() para filtrar
+        
         self.bodegaSeleccionPantalla = self.pantallaImportacionNovedades.tomarBodegasSeleccionada()
         if self.bodegaSeleccionPantalla:
             for i in range(len(self.bodegaSeleccionPantalla)):
@@ -63,6 +66,7 @@ class GestorImportacionNovedades:
                         actualizacionesVinos = self.obtenerActVinosBodegaSeleccionada(bodega)
                         self.obtenerVinosActualizables(actualizacionesVinos, bodega)
                         self.actualizarOCrearVinos(bodega, self.vinosActualizables)
+                        self.apiBodega.setFechaActualizacion(self.fechaActual)
                         self.pantallaImportacionNovedades.mostrarVinosActualizados(bodega, self.vinosActualizables)
                         self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)  # Cambiar a la vista de vinos actualizados
 
@@ -100,20 +104,37 @@ class GestorImportacionNovedades:
                 self.crearVino(vino)
     
     def actualizarCaracteristicasVinoExistente(self, vino):
-        InterfazApiBodega().actualizarDatosVino(vino)
+        self.apiBodega.actualizarDatosVino(vino)
 
     def determinarVinosActualizar(self):
         pass
 
     def crearVino(self, vino):
         # Crear un nuevo vino en la bodega seleccionada
-        self.buscarMaridaje(vino.maridaje)
+        maridaje = self.buscarMaridaje(vino.maridaje)
+        varietal = self.buscarTipoUva(vino.varietal.tipoUva)
+        self.crearVinos(vino, maridaje, varietal)
         vinoNuevo = Vino(vino.bodega, vino.nombre, vino.anio, vino.imgEtiqueta, vino.precioARS, vino.maridaje, vino.varietal, vino.notaCata)
         vino.bodega.addVino(vinoNuevo)
 
-    def buscarMaridaje(self, maridaje):
+    def buscarMaridaje(self, maridajeB): #maridajeB es el maridaje que hay que buscar
         for maridaje in self.maridajes:
-            maridaje.sosMaridaje() 
+            if maridaje.sosMaridaje(maridajeB):
+                return maridaje
+            return None
+
+    def buscarTipoUva(self,tipoUvaB):
+        for tipoUva in self.tipoUvas:
+            if tipoUva.sosTipoUva(tipoUvaB):
+                return tipoUva
+            return None
+            
+    def crearVinos(self,vino, maridaje, varietal):
+        nuevoVino = Vino(vino.bodega, vino.nombre, vino.anio, vino.imgEtiqueta, vino.precioARS, maridaje, varietal, vino.notaCata)
+        nuevoVino.crearVarietal(varietal.descripcion, varietal.porcentajeUva, varietal.tipoUva)
+        return nuevoVino
+
+            
 
     def buscarSeguidoresBodega(self, bodegasActualizadas):
         nombresUsuarios = []
