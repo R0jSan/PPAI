@@ -1,6 +1,5 @@
 import datetime
 import sys
-import random
 from PyQt5.QtWidgets import QApplication
 from Entities.Bodega import Bodega
 from Entities.Maridaje import Maridaje

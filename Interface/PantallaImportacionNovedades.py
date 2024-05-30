@@ -62,7 +62,7 @@ class PantallaImportacionNovedades(QMainWindow):
         self.seleccionar_bodega_button = QPushButton("Seleccionar Bodega")
         volver_button = QPushButton("Volver")
 
-        widgets = [bon_vino_label, menu_importar_label, bodegas_actualizables_label, self.bodegas_actualizables_list, self.seleccionar_bodega_button, volver_button]
+        widgets = [bon_vino_label, menu_importar_label, bodegas_actualizables_label, self.bodegas_actualizables_list, self.seleccionar_bodega_button, volver_button] 
 
         styles.alinear(bon_vino_label, styles.TITLE_SIZE)
         styles.alinear(menu_importar_label, styles.LABEL_SIZE)

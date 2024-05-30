@@ -9,7 +9,9 @@ class Enofilo:
         self.usuario = usuario
 
     def seguisABodega(self, bodega):
-        return self.siguiendo.sosDeBodega(bodega)
+        for i in range(len(self.siguiendo)):
+            if self.siguiendo[i].sosDeBodega(bodega):
+                return True 
 
     def getNombreUsuario(self):
         return self.usuario.getNombre()
@@ -36,23 +38,3 @@ class Enofilo:
     def getSiguiendo(self):
         return self.siguiendo
     
-    # def getColeccionFavoritos(self):
-    #    return self.coleccionFavoritos
-    
-#Metodos de Pantalla
-    def mostrarAmigosSeguidos(self):
-        if self.siguiendo:
-            print("Amigos seguidos:")
-            for amigo in self.siguiendo:
-                print(amigo)
-        else:
-            print("El enofilo no tiene amigos seguidos")
-""" 
-    def mostrarColeccionFavoritos(self):
-        if self.coleccionFavoritos:
-            print("Coleccion de Favoritos:")
-            for favorito in self.coleccionFavoritos:
-                print(favorito)
-        else:
-            print("El enofilo no tiene ningun vino favorito")
-"""
