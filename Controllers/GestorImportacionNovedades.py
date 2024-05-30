@@ -27,7 +27,7 @@ class GestorImportacionNovedades:
         self.calcularFechaActual()
         self.buscarBodegasActualizables()
         self.pantallaImportacionNovedades.mostrarBodegasActualizables(self.nombreBodegasActualizables)
-        self.pantallaImportacionNovedades.seleccionar_bodega_button.clicked.connect(self.procesarBodegaSeleccionada)
+        self.pantallaImportacionNovedades.seleccionar_bodega_button.clicked.connect(self.tomarBodegasSeleccionada)
 
     """
     Calcula la fecha actual y la guarda en una variable
@@ -55,7 +55,7 @@ class GestorImportacionNovedades:
     luego recorre cada bodega para obtener los vinos actualizados con la funcion del gestor obtenerVinosActualizables()
     y con la funcion actualizarOCrearVinos() modifica los ya existentes o crea los que no existan
     """
-    def procesarBodegaSeleccionada(self):
+    def tomarBodegasSeleccionada(self):
         # self.bodegaSeleccionPantalla es un array de objetos QListWidgetItem, tengo que aplicarle .text() para filtrar
         
         self.bodegaSeleccionPantalla = self.pantallaImportacionNovedades.tomarBodegasSeleccionada()
@@ -75,7 +75,7 @@ class GestorImportacionNovedades:
     devuelve un array con lo vinos actualizados que tiene la API
     """
     def obtenerActVinosBodegaSeleccionada(self, bodegaSeleccionada):
-        return InterfazApiBodega().obtenerActualizacionesVinos(bodegaSeleccionada)
+        return self.apiBodega.obtenerActualizacionesVinos(bodegaSeleccionada)
     """
     def obtenerVinosActualizables(self, bodegaSeleccionada, actualizacionesVinos):
         vinosActualizables = []
@@ -95,6 +95,7 @@ class GestorImportacionNovedades:
             if bodega.tenesEsteVino(vino): # Modificado
                 vinosActualizables.append(vino)
         self.vinosActualizables = vinosActualizables
+
 
     def actualizarOCrearVinos(self, bodegaSeleccionada, vinosActualizables):
         for vino in vinosActualizables:

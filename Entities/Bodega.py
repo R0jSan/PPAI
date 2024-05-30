@@ -72,7 +72,9 @@ class Bodega:
     """
     def tenesEsteVino(self, vino):
         for vino in self.vinos:
-            vino.sosEsteVino(vino.nombre)
+            if vino.sosEsteVino(vino.nombre):
+                return True
+            return False
 
     def actualizarDatosVino(self, vinoActualizar):
         for vino in self.vinos:
@@ -80,5 +82,5 @@ class Bodega:
                 vino.setPrecio(vinoActualizar.precioARS)
                 vino.setNotaCata(vinoActualizar.notaCata)
                 vino.setimgEtiqueta(vinoActualizar.imgEtiqueta)
-                vino.setFechaActualizacion(datetime.datetime.now())
+                vino.setFechaActualiz(datetime.datetime.now())
 

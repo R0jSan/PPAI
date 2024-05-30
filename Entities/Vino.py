@@ -25,7 +25,7 @@ class Vino:
         return self.nombre == nombreBusqueda
 
     def sosVinoParaActualizar(self, vinoActualizar):
-        return (vinoActualizar.nombre == self.vino)
+        return (vinoActualizar.nombre == self.nombre)
 
     def setPrecio(self, nuevoPrecio):
         self.precioARS = nuevoPrecio
@@ -35,6 +35,9 @@ class Vino:
 
     def setFechaActualiz(self, nuevaFecha):
         self.fechaActualizacion = nuevaFecha
+
+    def setNotaCata(self, nuevaNotaCata):
+        self.notaCata = nuevaNotaCata
 
     """
     def mostrarVino(self, bodega):

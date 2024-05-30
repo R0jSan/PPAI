@@ -8,19 +8,30 @@ class InterfazApiBodega:
         self.fechaActualizacion = None
 
     def obtenerActualizacionesVinos(self, bodega):
-        # Simula la obtención de actualizaciones de vinos con datos completos
+                # Simula la obtención de actualizaciones de vinos con datos completos
         vinos_actualizados = []
         
-        nombre = "Santa Julia Malbec"
-        anio = 2020
-        imgEtiqueta = "etiqueta_santa_julia_malbec.jpg"
-        precioARS = random.randint(800, 2000)
-        maridaje = f"Maridaje 1"
-        varietal = f"Varietal 1"
-        notaCata = "Notas de frutos rojos y taninos suaves."
-            
-        vino = Vino(bodega, nombre, anio, imgEtiqueta, precioARS, maridaje, varietal, notaCata)
-        vinos_actualizados.append(vino)
+        # Datos ficticios de vinos actualizados
+        nombres_vinos = ["Santa Julia Malbec", "Santa Julia Cabernet Sauvignon", "Santa Julia Syrah"]
+        anios = [2020, 2019, 2021]
+        imgEtiquetas = ["etiqueta_santa_julia_malbec.jpg", "etiqueta_santa_julia_cabernet.jpg", "etiqueta_santa_julia_syrah.jpg"]
+        preciosARS = [850, 950, 1050]
+        maridajes = ["Carne Roja", "Quesos", "Pasta"]
+        varietales = ["Malbec", "Cabernet Sauvignon", "Syrah"]
+        notasCata = ["Notas de frutos rojos y taninos suaves.", "Aromas a pimiento verde y grosella negra.", "Sabores de mora y pimienta."]
+
+        for i in range(len(nombres_vinos)):
+            vino = Vino(
+                bodega,
+                nombres_vinos[i],
+                anios[i],
+                imgEtiquetas[i],
+                preciosARS[i],
+                maridajes[i],
+                varietales[i],
+                notasCata[i]
+            )
+            vinos_actualizados.append(vino)
         
         return vinos_actualizados
     
