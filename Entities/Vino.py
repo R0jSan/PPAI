@@ -1,4 +1,4 @@
-from Entities.varietal import Varietal
+from Entities.Varietal import Varietal
 
 
 class Vino:

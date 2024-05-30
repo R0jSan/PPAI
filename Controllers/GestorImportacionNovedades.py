@@ -48,7 +48,6 @@ class GestorImportacionNovedades:
                 self.bodegasActualizables.append(bodega)
                 self.nombreBodegasActualizables.append(bodega.getNombre()) # modificado
 
-
     """
     funcion procesarBodegaSeleccionada()
     el atributo del gestor "bodegaSeleccionPantalla" guarda un array con las bodegas seleccionadas
@@ -61,14 +60,17 @@ class GestorImportacionNovedades:
         self.bodegaSeleccionPantalla = self.pantallaImportacionNovedades.tomarBodegasSeleccionada()
         if self.bodegaSeleccionPantalla:
             for i in range(len(self.bodegaSeleccionPantalla)):
-                for bodega in self.bodegas:
+                for bodega in self.bodegasActualizables:
                     if bodega.nombre == self.bodegaSeleccionPantalla[i].text():
-                        actualizacionesVinos = self.obtenerActVinosBodegaSeleccionada(bodega)
+                        actualizacionesVinos = self.obtenerActVinosBodegaSeleccionada(bodega.nombre)
                         self.obtenerVinosActualizables(actualizacionesVinos, bodega)
                         self.actualizarOCrearVinos(bodega, self.vinosActualizables)
                         self.apiBodega.setFechaActualizacion(self.fechaActual)
                         self.pantallaImportacionNovedades.mostrarVinosActualizados(bodega, self.vinosActualizables)
                         self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)  # Cambiar a la vista de vinos actualizados
+
+                        # -----------Es para testear
+                        # print(f"Bodega: {bodega.nombre} == {self.bodegaSeleccionPantalla[i].text()}")
 
     """
     Funcion obtenerActVinosBodegaSeleccionada()
@@ -76,14 +78,6 @@ class GestorImportacionNovedades:
     """
     def obtenerActVinosBodegaSeleccionada(self, bodegaSeleccionada):
         return self.apiBodega.obtenerActualizacionesVinos(bodegaSeleccionada)
-    """
-    def obtenerVinosActualizables(self, bodegaSeleccionada, actualizacionesVinos):
-        vinosActualizables = []
-        for vino in actualizacionesVinos:
-            if bodegaSeleccionada.sosEsteVino(vino): # Modificado
-                vinosActualizables.append(vino)
-        self.vinosActualizables = vinosActualizables
-    """
 
     """
     funcion obtenerVinosActualizables()
@@ -133,8 +127,6 @@ class GestorImportacionNovedades:
         nuevoVino = Vino(vino.bodega, vino.nombre, vino.anio, vino.imgEtiqueta, vino.precioARS, maridaje, varietal, vino.notaCata)
         nuevoVino.crearVarietal(varietal.descripcion, varietal.porcentajeUva, varietal.tipoUva)
         return nuevoVino
-
-            
 
     def buscarSeguidoresBodega(self, bodegasActualizadas):
         nombresUsuarios = []
