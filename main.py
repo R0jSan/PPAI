@@ -25,6 +25,7 @@ if __name__ == '__main__':
     bodegasMock = [
     Bodega(
         fechaUltimaActualizacion=datetime.datetime(2023, 5, 27), 
+        #fechaUltimaActualizacion = datetime.datetime.now(),
         region="Cuyo", 
         nombre="Catena Zapata", 
         periodoActualizacion=1, 
@@ -34,6 +35,7 @@ if __name__ == '__main__':
     ),
     Bodega(
         fechaUltimaActualizacion=datetime.datetime(2022, 8, 15), 
+        #fechaUltimaActualizacion = datetime.datetime.now(),
         region="Cuyo", 
         nombre="Santa Julia", 
         periodoActualizacion=1, 
@@ -42,7 +44,8 @@ if __name__ == '__main__':
         coordUbi="Ruta Provincial 33, km 7,5 (M5531) Maipú, Mendoza, Argentina"
     ),
     Bodega(
-        fechaUltimaActualizacion=datetime.datetime(2025, 3, 10), 
+        fechaUltimaActualizacion=datetime.datetime(2025, 3, 10),
+        #fechaUltimaActualizacion = datetime.datetime.now(),
         region="Cuyo", 
         nombre="La Azul", 
         periodoActualizacion=1, 
@@ -52,6 +55,7 @@ if __name__ == '__main__':
     ),
     Bodega(
         fechaUltimaActualizacion=datetime.datetime(2020, 11, 5), 
+        #fechaUltimaActualizacion = datetime.datetime.now(),
         region="Cuyo", 
         nombre="Los Toneles", 
         periodoActualizacion=1, 
