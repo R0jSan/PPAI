@@ -9,7 +9,7 @@ class InterfazNotificacionesPush:
     def notificarNovedadVinoParaBodega(self):
         notificacion = Notify()
         for usuario in self.usuariosNombres:
-            notificacion.title = f"{self.bodega.nombre}"
+            notificacion.title = f"Bodega {self.bodega.nombre}"
             notificacion.message = f"Hola {usuario}, no te pierdas las novedades!!!"
             notificacion.application_name = "BONVINO"
             notificacion.icon = "Media\\icons\\icono_notificacion.png"

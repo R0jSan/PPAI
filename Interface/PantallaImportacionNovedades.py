@@ -5,7 +5,7 @@ from Controllers.GestorImportacionNovedades import GestorImportacionNovedades
 class PantallaImportacionNovedades(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Menú de administrador de Bodegas")
+        self.setWindowTitle("Menú de administrador de Bonvino")
         self.setFixedSize(390, 695) 
 
         # Imagen de fondo
@@ -138,39 +138,49 @@ class PantallaImportacionNovedades(QMainWindow):
         palette.setBrush(QPalette.Window, QBrush(pixmap))
         self.setPalette(palette)
 
-    def mostrarVinosActualizados(self, bodega, vinos):
-        self.bodega_label.setText(f"Bodega: {bodega.getNombre()}")
-        self.lista_vinos.clear()
+    def mostrarVinosActualizados(self, bodegas, vinos):
+        if len(vinos) > 0:
+            # print(f"vinos: {len(vinos)} - bodegas: {len(bodegas)}")
+            for bodega in bodegas:
+                
+                self.bodega_label.setText(f"Bodega: {bodega.getNombre()}")
+                self.lista_vinos.clear()
     
-        for vino in vinos:
+                for vino in vinos:
+                    if bodega.getNombre() == vino.bodega:
+                        vino_widget = QWidget()
+                        vino_layout = QVBoxLayout(vino_widget)
+            
+                        nombre_label = QLabel(f"Nombre: {vino.nombre}")
+                        anio_label = QLabel(f"Año: {vino.anio}")
+                        precio_label = QLabel(f"Precio: {vino.precioARS} ARS")
+                        nota_cata_label = QLabel(f"Nota de cata: {vino.notaCata}")
+            
+                        nombre_label.setStyleSheet("font-weight: bold; color: #333;")
+                        anio_label.setStyleSheet("color: #555;")
+                        precio_label.setStyleSheet("color: #555;")
+                        nota_cata_label.setStyleSheet("color: #555;")
+            
+                        vino_layout.addWidget(nombre_label)
+                        vino_layout.addWidget(anio_label)
+                        vino_layout.addWidget(precio_label)
+                        vino_layout.addWidget(nota_cata_label)
+                        vino_layout.setContentsMargins(10, 10, 10, 10)
+                        vino_layout.setSpacing(5)
+            
+                        list_item = QListWidgetItem(self.lista_vinos)
+                        list_item.setSizeHint(vino_widget.sizeHint())
+            
+                        self.lista_vinos.addItem(list_item)
+                        self.lista_vinos.setItemWidget(list_item, vino_widget)
+        else:
+            
             vino_widget = QWidget()
             vino_layout = QVBoxLayout(vino_widget)
-            
-            nombre_label = QLabel(f"Nombre: {vino.nombre}")
-            anio_label = QLabel(f"Año: {vino.anio}")
-            precio_label = QLabel(f"Precio: {vino.precioARS} ARS")
-            maridaje_label = QLabel(f"Maridaje: {vino.maridaje}")
-            varietal_label = QLabel(f"Varietal: {vino.varietal}")
-            nota_cata_label = QLabel(f"Nota de cata: {vino.notaCata}")
-            
+            nombre_label = QLabel(f"No hay actualizaciones disponibles")
             nombre_label.setStyleSheet("font-weight: bold; color: #333;")
-            anio_label.setStyleSheet("color: #555;")
-            precio_label.setStyleSheet("color: #555;")
-            maridaje_label.setStyleSheet("color: #555;")
-            varietal_label.setStyleSheet("color: #555;")
-            nota_cata_label.setStyleSheet("color: #555;")
-            
             vino_layout.addWidget(nombre_label)
-            vino_layout.addWidget(anio_label)
-            vino_layout.addWidget(precio_label)
-            vino_layout.addWidget(maridaje_label)
-            vino_layout.addWidget(varietal_label)
-            vino_layout.addWidget(nota_cata_label)
-            vino_layout.setContentsMargins(10, 10, 10, 10)
-            vino_layout.setSpacing(5)
-            
             list_item = QListWidgetItem(self.lista_vinos)
             list_item.setSizeHint(vino_widget.sizeHint())
-            
             self.lista_vinos.addItem(list_item)
             self.lista_vinos.setItemWidget(list_item, vino_widget)

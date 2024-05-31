@@ -54,61 +54,57 @@ class GestorImportacionNovedades:
     """
     funcion procesarBodegaSeleccionada()
     el atributo del gestor "bodegaSeleccionPantalla" guarda un array con las bodegas seleccionadas
-    luego recorre cada bodega para obtener los vinos actualizados con la funcion del gestor obtenerVinosActualizables()
-    y con la funcion actualizarOCrearVinos() modifica los ya existentes o crea los que no existan
+    y llama a la funcion obtenerActualizacionBodegaeleccionada(), pasandole como parametro un array
     """
     def tomarBodegasSeleccionada(self):
-        # self.bodegaSeleccionPantalla es un array de objetos QListWidgetItem, tengo que aplicarle .text() para filtrar
-        
+        # self.bodegaSeleccionPantalla es un array de objetos QListWidgetItem, tengo que aplicarle .text() para filtrar        
         self.bodegaSeleccionPantalla = self.pantallaImportacionNovedades.tomarBodegasSeleccionada()
-        if self.bodegaSeleccionPantalla:
-            for i in range(len(self.bodegaSeleccionPantalla)):
-                for bodega in self.bodegasActualizables:
-                    if bodega.nombre == self.bodegaSeleccionPantalla[i].text():
-                        actualizacionesVinos = self.obtenerActVinosBodegaSeleccionada(bodega.nombre)
-                        self.obtenerVinosActualizables(actualizacionesVinos, bodega)
-                        self.actualizarOCrearVinos(bodega, self.vinosActualizables)
-                        self.apiBodega.setFechaActualizacion(self.fechaActual)
-                        self.pantallaImportacionNovedades.mostrarVinosActualizados(bodega, self.vinosActualizables)
-                        self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)  # Cambiar a la vista de vinos actualizados
-                        
-                        # Luego de mostrar el resumen de vinos actualizados notifica la actualización a los usuarios
-                        self.pantallaNotificacion = InterfazNotificacionesPush(self.buscarSeguidoresBodega(bodega), bodega)
-                        self.pantallaNotificacion.notificarNovedadVinoParaBodega()
-                        # -----------Es para testear
-                        # print(f"Bodega: {bodega.nombre} == {self.bodegaSeleccionPantalla[i].text()}")
+        bodegasSeleccionadas = []
+        # Dos ciclos for para obtener los objetos bodega a partir del nombre tomado desde la pantalla
+        for bodegaNombre in self.bodegaSeleccionPantalla:
+            for bodega in self.bodegasActualizables:
+                if bodegaNombre.text() == bodega.nombre:
+                    bodegasSeleccionadas.append(bodega)
+
+        self.obtenerActualizacionBodegaSeleccionada(bodegasSeleccionadas)
 
     """
     Funcion obtenerActVinosBodegaSeleccionada()
     devuelve un array con lo vinos actualizados que tiene la API
     """
-    def obtenerActVinosBodegaSeleccionada(self, bodegaSeleccionada):
-        return self.apiBodega.obtenerActualizacionesVinos(bodegaSeleccionada)
-
+    def obtenerActualizacionBodegaSeleccionada(self, bodegasSeleccionadas):
+        actualizaciones =  self.apiBodega.obtenerActualizacionesVinos(bodegasSeleccionadas)
+        self.obtenerVinosAActualizar(actualizaciones, bodegasSeleccionadas)
     """
     funcion obtenerVinosActualizables()
     El parametro "actualizacionesVinos" contiene un array con los vinos a modificar
     """
-    def obtenerVinosActualizables(self, actualizacionesVinos, bodega):
-        vinosActualizables = []
-        for vino in actualizacionesVinos:
-            if bodega.tenesEsteVino(vino): # Modificado
-                vinosActualizables.append(vino)
-        self.vinosActualizables = vinosActualizables
+    def obtenerVinosAActualizar(self, actualizacionesVinos, bodegasSeleccionadas):
+        for bodega in bodegasSeleccionadas:
+            for vino in actualizacionesVinos:
+                if bodega.tenesEsteVino(vino): # Modificado
+                    self.vinosActualizables.append(vino)
+        # Llamado a la funcion actualizarOCrearVinos
+        self.actualizarOCrearVinos(bodegasSeleccionadas)
 
 
-    def actualizarOCrearVinos(self, bodegaSeleccionada, vinosActualizables):
-        for vino in vinosActualizables:
-            if bodegaSeleccionada.tenesEsteVino(vino):
-                self.actualizarCaracteristicasVinoExistente(vino,bodegaSeleccionada)
-            else:
-                self.crearVino(vino)
-    
+    def actualizarOCrearVinos(self, bodegaSeleccionada):
+        for bodega in bodegaSeleccionada:
+            for vino in self.vinosActualizables:
+                if bodega.tenesEsteVino(vino):
+                    self.actualizarCaracteristicasVinoExistente(vino,bodega)
+                else:
+                    self.crearVino(vino)
+        if len(self.vinosActualizables) > 0:
+            self.pantallaImportacionNovedades.mostrarVinosActualizados(bodegaSeleccionada, self.vinosActualizables)
+            self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)        
+            self.enviarNotificacionesPush(bodegaSeleccionada)
+        else:
+            self.pantallaImportacionNovedades.mostrarVinosActualizados([], [])
+            self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)        
+
     def actualizarCaracteristicasVinoExistente(self, vino,bodega):
         bodega.actualizarDatosVino(vino)
-
-    def determinarVinosActualizar(self):
-        pass
 
     def crearVino(self, vino):
         # Crear un nuevo vino en la bodega seleccionada
@@ -134,11 +130,19 @@ class GestorImportacionNovedades:
         nuevoVino.crearVarietal(varietal.descripcion, varietal.porcentajeUva, varietal.tipoUva)
         return nuevoVino
 
-    def buscarSeguidoresBodega(self, bodega):
+    def enviarNotificacionesPush(self, bodegas):
+        usuarios = self.buscarSeguidoresBodega(bodegas)
+        
+        for bodega in bodegas:
+            self.pantallaNotificacion = InterfazNotificacionesPush(usuarios, bodega)
+            self.pantallaNotificacion.notificarNovedadVinoParaBodega()
+
+
+    def buscarSeguidoresBodega(self, bodegas):
         nombresUsuarios = []
         for enofilo in self.enofilos:
-            # for bodega in bodegasActualizadas:
-            if enofilo.seguisABodega(bodega):
-                nombresUsuarios.append(enofilo.getNombreUsuario())
+            for bodega in bodegas:
+                if enofilo.seguisABodega(bodega):
+                    nombresUsuarios.append(enofilo.getNombreUsuario())
 
         return nombresUsuarios
