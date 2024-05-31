@@ -61,7 +61,7 @@ class PantallaImportacionNovedades(QMainWindow):
         menu_importar_label = QLabel("Menu Importar Actualización de Vinos")
         bodegas_actualizables_label = QLabel("Bodegas con actualizaciones pendientes:")
         self.bodegas_actualizables_list = QListWidget()
-        self.bodegas_actualizables_list.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
+        self.bodegas_actualizables_list.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.seleccionar_bodega_button = QPushButton("Seleccionar Bodega")
         # volver_button = QPushButton("Volver")
 
@@ -105,12 +105,11 @@ class PantallaImportacionNovedades(QMainWindow):
     def tomarBodegasSeleccionada(self):  
         selectedItems = self.bodegas_actualizables_list.selectedItems()
         if selectedItems:
+            bodegasSeleccionadas = []
             for item in selectedItems:
             # self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
             # self.mostrarVentanaBodegaSeleccionada()
-                bodegasSeleccionadas = []
                 bodegasSeleccionadas.append(item)
-
             # return selectedItems[0]
             # return selectedItems[0].text() # Agregado
             return bodegasSeleccionadas
@@ -149,7 +148,7 @@ class PantallaImportacionNovedades(QMainWindow):
         if len(vinos) > 0:
             for bodega in bodegas:
                 flag = False
-                self.lista_vinos.clear()
+                #self.lista_vinos.clear()
     
                 for vino in vinos:
                     if bodega.getNombre() == vino.bodega:

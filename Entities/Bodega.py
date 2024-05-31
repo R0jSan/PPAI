@@ -70,11 +70,11 @@ class Bodega:
     self.vino es un atributo de la clase Bodega y contiene un array con todos los vinos de la bodega
     sosEsteVino es un método de la clase Vino y devuelve True en caso de serlo
     """
-    def tenesEsteVino(self, vino):
+    def tenesEsteVino(self, vinobusqueda):
         for vino in self.vinos:
-            if vino.sosEsteVino(vino.nombre):
+            if vino.sosEsteVino(vinobusqueda.nombre):
                 return True
-            return False
+        return False
 
     def actualizarDatosVino(self, vinoActualizar):
         for vino in self.vinos:

@@ -92,7 +92,7 @@ if __name__ == '__main__':
 
     vinosMock = [
     Vino(bodegasMock[0], "Catena Malbec", 2019, "etiqueta_catena_malbec.jpg", 8000, maridajes[0], varietales[0], "Frutado con notas de ciruela y moras."),
-    Vino(bodegasMock[0], "Catena Chardonnay", 2020, "etiqueta_catena_chardonnay.jpg", 7600, maridajes[1], varietales[2], "Aromas de manzana verde y pera con un toque de vainilla."),
+    Vino(bodegasMock[0], "Catena Chardonay", 2020, "etiqueta_catena_chardonnay.jpg", 7600, maridajes[1], varietales[2], "Aromas de manzana verde y pera con un toque de vainilla."),
     Vino(bodegasMock[1], "Santa Julia Malbec", 2018, "etiqueta_santa_julia_malbec.jpg", 8300, maridajes[0], varietales[0], "Notas de frutos rojos y taninos suaves."),
     Vino(bodegasMock[1], "Santa Julia Cabernet Sauvignon", 2017, "etiqueta_santa_julia_cabernet.jpg", 9000, maridajes[4], varietales[1], "Aromas a pimiento verde y grosella negra."),
     Vino(bodegasMock[2], "La Azul Malbec", 2016, "etiqueta_la_azul_malbec.jpg", 6500, maridajes[2], varietales[0], "Sabores intensos de ciruela y especias."),

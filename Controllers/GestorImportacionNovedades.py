@@ -84,7 +84,7 @@ class GestorImportacionNovedades:
             for vino in actualizacionesVinos:
                 if bodega.tenesEsteVino(vino): # Modificado
                     self.vinosActualizables.append(vino)
-        # Llamado a la funcion actualizarOCrearVinos
+            # Llamado a la funcion actualizarOCrearVinos
         self.actualizarOCrearVinos(bodegasSeleccionadas)
 
 
@@ -137,7 +137,7 @@ class GestorImportacionNovedades:
         
         for bodega in bodegas:
             self.pantallaNotificacion = InterfazNotificacionesPush(usuarios, bodega)
-            self.pantallaNotificacion.notificarNovedadVinoParaBodega()
+            #self.pantallaNotificacion.notificarNovedadVinoParaBodega()
 
 
     def buscarSeguidoresBodega(self, bodegas):
