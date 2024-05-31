@@ -137,7 +137,7 @@ class GestorImportacionNovedades:
         
         for bodega in bodegas:
             self.pantallaNotificacion = InterfazNotificacionesPush(usuarios, bodega)
-            #self.pantallaNotificacion.notificarNovedadVinoParaBodega()
+            self.pantallaNotificacion.notificarNovedadVinoParaBodega()
 
 
     def buscarSeguidoresBodega(self, bodegas):
