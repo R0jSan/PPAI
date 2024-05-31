@@ -150,15 +150,15 @@ class GestorImportacionNovedades:
         return nombresUsuarios
     
     def finCU(self):
-        self.bodegas = None
-        self.bodegasActualizables = None
-        self.nombreBodegasActualizables = None
-        self.pantallaImportacionNovedades = None
-        self.maridajes = None
-        self.tiposUvas = None
-        self.vinosActualizables = None
-        self.fechaActual = None 
-        self.bodegaSeleccionPantalla = None
-        self.enofilos = None
-        self.seguidores = None
-        self.pantallaNotificacion = None
+        del self.bodegas
+        del self.bodegasActualizables
+        del self.nombreBodegasActualizables
+        del self.pantallaImportacionNovedades
+        del self.maridajes
+        del self.tiposUvas
+        del self.vinosActualizables
+        del self.fechaActual 
+        del self.bodegaSeleccionPantalla
+        del self.enofilos
+        del self.seguidores
+        del self.pantallaNotificacion
