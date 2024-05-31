@@ -1,8 +1,9 @@
 from Interface.style import styles
+from PyQt5 import QtWidgets
 from PyQt5.QtGui import  QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
-from Controllers.GestorImportacionNovedades import GestorImportacionNovedades
+
 class PantallaImportacionNovedades(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -10,7 +11,7 @@ class PantallaImportacionNovedades(QMainWindow):
         self.setFixedSize(390, 695) 
 
         # Imagen de fondo
-        self.definir_fondo("Interface\\style\\bonvino.png")
+        self.definirFondo("Interface\\style\\bonvino.png")
 
         # Ventana principal
         self.central_widget = QWidget()
@@ -60,6 +61,7 @@ class PantallaImportacionNovedades(QMainWindow):
         menu_importar_label = QLabel("Menu Importar Actualización de Vinos")
         bodegas_actualizables_label = QLabel("Bodegas con actualizaciones pendientes:")
         self.bodegas_actualizables_list = QListWidget()
+        self.bodegas_actualizables_list.setSelectionMode(QtWidgets.QAbstractItemView.ExtendedSelection)
         self.seleccionar_bodega_button = QPushButton("Seleccionar Bodega")
         # volver_button = QPushButton("Volver")
 
@@ -136,7 +138,7 @@ class PantallaImportacionNovedades(QMainWindow):
     def mostrarVentanaBodegaSeleccionada(self):
         self.stacked_widget.setCurrentIndex(2)
 
-    def definir_fondo(self, img):
+    def definirFondo(self, img):
         pixmap = QPixmap(img)
         palette = self.palette()
         palette.setBrush(QPalette.Window, QBrush(pixmap))
@@ -156,28 +158,22 @@ class PantallaImportacionNovedades(QMainWindow):
                         vino_layout = QVBoxLayout(vino_widget)
                         
                         if not flag:
-                            bodega_label = QLabel(f"~~~ {bodega.nombre} ~~~")
-                            bodega_label.setStyleSheet("font-weight: bold; color: #333; font-size: 15px")
-                            bodega_label.setAlignment(Qt.AlignHCenter)
-                            vino_layout.addWidget(bodega_label)
+                            self.crearLabelBodega(bodega, vino_layout)
                             flag = True
 
                         nombre_label = QLabel(f"Nombre: {vino.nombre}")
                         anio_label = QLabel(f"Añada: {vino.aniada}")
                         precio_label = QLabel(f"Precio: {vino.precioARS} ARS")
                         nota_cata_label = QLabel(f"Nota de cata: {vino.notaCata}")
-            
+
+                        widgets = [nombre_label, anio_label, precio_label, nota_cata_label] 
+                        
                         nombre_label.setStyleSheet("font-weight: bold; color: #333;")
                         anio_label.setStyleSheet("color: #555;")
                         precio_label.setStyleSheet("color: #555;")
                         nota_cata_label.setStyleSheet("color: #555;")
-            
-                        vino_layout.addWidget(nombre_label)
-                        vino_layout.addWidget(anio_label)
-                        vino_layout.addWidget(precio_label)
-                        vino_layout.addWidget(nota_cata_label)
-                        vino_layout.setContentsMargins(10, 10, 10, 10)
-                        vino_layout.setSpacing(5)
+
+                        styles.crearLayout(widgets, vino_layout)
             
                         list_item = QListWidgetItem(self.lista_vinos)
                         list_item.setSizeHint(vino_widget.sizeHint())
@@ -195,3 +191,9 @@ class PantallaImportacionNovedades(QMainWindow):
             list_item.setSizeHint(vino_widget.sizeHint())
             self.lista_vinos.addItem(list_item)
             self.lista_vinos.setItemWidget(list_item, vino_widget)
+    
+    def crearLabelBodega(self, bodega, layout):
+        bodega_label = QLabel(f"~~~ {bodega.nombre} ~~~")
+        bodega_label.setStyleSheet("font-weight: bold; color: #333; font-size: 15px")
+        bodega_label.setAlignment(Qt.AlignHCenter)
+        layout.addWidget(bodega_label)
