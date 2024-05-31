@@ -6,11 +6,11 @@ class Vino:
         self.bodega = bodega 
         self.nombre = nombre 
         self.aniada = aniada
-        self.imgEtiqueta = imgEtiqueta #!
+        self.imgEtiqueta = imgEtiqueta
         self.precioARS = precioARS
         self.maridaje = maridaje
         self.varietal = varietal
-        self.fechaActualizacion = None #!
+        self.fechaActualizacion = None
         self.notaCata = notaCata
 
     def crearVarietal(self, descripcion, porcentajeUva, tipoUva):
@@ -32,7 +32,7 @@ class Vino:
     def setimgEtiqueta(self, nuevaImg):
         self.imgEtiqueta = nuevaImg
 
-    def setFechaActualiz(self, nuevaFecha):
+    def setFechaActualizacion(self, nuevaFecha):
         self.fechaActualizacion = nuevaFecha
 
     def setNotaCata(self, nuevaNotaCata):

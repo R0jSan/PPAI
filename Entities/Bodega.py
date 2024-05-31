@@ -82,7 +82,7 @@ class Bodega:
                 vino.setPrecio(vinoActualizar.precioARS)
                 vino.setNotaCata(vinoActualizar.notaCata)
                 vino.setimgEtiqueta(vinoActualizar.imgEtiqueta)
-                vino.setFechaActualiz(datetime.datetime.now())
+                vino.setFechaActualizacion(datetime.datetime.now())
 
     def contarReseñas():
         pass

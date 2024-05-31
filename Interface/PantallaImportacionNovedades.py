@@ -1,6 +1,7 @@
 from Interface.style import styles
 from PyQt5.QtGui import  QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import *
+from PyQt5.QtCore import Qt
 from Controllers.GestorImportacionNovedades import GestorImportacionNovedades
 class PantallaImportacionNovedades(QMainWindow):
     def __init__(self):
@@ -80,7 +81,7 @@ class PantallaImportacionNovedades(QMainWindow):
 
         bon_vino_label = QLabel("BON VINO")
         self.bodega_label = QLabel()
-        vinos_actualizados_label = QLabel("Vinos actualizados: ")
+        vinos_actualizados_label = QLabel("Resumen de actualización")
         self.lista_vinos = QListWidget()
         #volver_button = QPushButton("Volver")
         widgets = [bon_vino_label, self.bodega_label, vinos_actualizados_label, self.lista_vinos] # , volver_button
@@ -142,20 +143,27 @@ class PantallaImportacionNovedades(QMainWindow):
         self.setPalette(palette)
 
     def mostrarVinosActualizados(self, bodegas, vinos):
+        
         if len(vinos) > 0:
-            # print(f"vinos: {len(vinos)} - bodegas: {len(bodegas)}")
             for bodega in bodegas:
-                
-                self.bodega_label.setText(f"Bodega: {bodega.getNombre()}")
+                flag = False
                 self.lista_vinos.clear()
     
                 for vino in vinos:
                     if bodega.getNombre() == vino.bodega:
+                        
                         vino_widget = QWidget()
                         vino_layout = QVBoxLayout(vino_widget)
-            
+                        
+                        if not flag:
+                            bodega_label = QLabel(f"~~~ {bodega.nombre} ~~~")
+                            bodega_label.setStyleSheet("font-weight: bold; color: #333; font-size: 15px")
+                            bodega_label.setAlignment(Qt.AlignHCenter)
+                            vino_layout.addWidget(bodega_label)
+                            flag = True
+
                         nombre_label = QLabel(f"Nombre: {vino.nombre}")
-                        anio_label = QLabel(f"Aniada: {vino.aniada}")
+                        anio_label = QLabel(f"Añada: {vino.aniada}")
                         precio_label = QLabel(f"Precio: {vino.precioARS} ARS")
                         nota_cata_label = QLabel(f"Nota de cata: {vino.notaCata}")
             

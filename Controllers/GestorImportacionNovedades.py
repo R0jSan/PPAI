@@ -112,7 +112,7 @@ class GestorImportacionNovedades:
         # Crear un nuevo vino en la bodega seleccionada
         maridaje = self.buscarMaridaje(vino.maridaje)
         varietal = self.buscarTipoUva(vino.varietal.tipoUva)
-        vinoNuevo =self.crearVinos(vino, maridaje, varietal)
+        vinoNuevo = self.crearVinos(vino, maridaje, varietal)
         vino.bodega.addVino(vinoNuevo)
 
     def buscarMaridaje(self, maridajeB): #maridajeB es el maridaje que hay que buscar
