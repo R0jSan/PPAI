@@ -7,7 +7,6 @@ class Siguiendo:
     def sosDeBodega(self, bodegaComparar):
         return self.bodega == bodegaComparar
 
-    
     def setFechaFin(self,fechaFin):
         self.fechaFin = fechaFin
 

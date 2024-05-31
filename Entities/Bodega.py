@@ -15,7 +15,7 @@ class Bodega:
     def addVino(self, vino):
         self.vinos.append(vino)
 
-    def mostrarVinos(self):
+    def mostrarTodosVinos(self):
         for vino in self.vinos:
             vino.mostrarVino(self)
 
@@ -83,4 +83,8 @@ class Bodega:
                 vino.setNotaCata(vinoActualizar.notaCata)
                 vino.setimgEtiqueta(vinoActualizar.imgEtiqueta)
                 vino.setFechaActualiz(datetime.datetime.now())
+
+    def contarReseñas():
+        pass
+
 

@@ -152,7 +152,7 @@ class PantallaImportacionNovedades(QMainWindow):
                         vino_layout = QVBoxLayout(vino_widget)
             
                         nombre_label = QLabel(f"Nombre: {vino.nombre}")
-                        anio_label = QLabel(f"Año: {vino.anio}")
+                        anio_label = QLabel(f"Aniada: {vino.aniada}")
                         precio_label = QLabel(f"Precio: {vino.precioARS} ARS")
                         nota_cata_label = QLabel(f"Nota de cata: {vino.notaCata}")
             

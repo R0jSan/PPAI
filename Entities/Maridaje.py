@@ -6,6 +6,9 @@ class Maridaje:
     def sosMaridaje(self, busqueda):
         return self.nombre == busqueda
     
+    def maridaConVino():
+        pass
+    
     def setMaridaje(self,nombre,descripcion):
         self.nombre = nombre
         self.descripcion = descripcion

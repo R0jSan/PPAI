@@ -11,6 +11,9 @@ class Varietal():
     
     def esDeUva(self,uva=str()):
         return self.tipoUva.sosTipoUva(uva)
+    
+    def MostrarPorcentaje(self):
+        return f'{self.tipoUva.getPorcentajeUva()}%'
     #get
 
     def getDescripcion(self):
