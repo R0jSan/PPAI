@@ -60,9 +60,9 @@ class PantallaImportacionNovedades(QMainWindow):
         bodegas_actualizables_label = QLabel("Bodegas con actualizaciones pendientes:")
         self.bodegas_actualizables_list = QListWidget()
         self.seleccionar_bodega_button = QPushButton("Seleccionar Bodega")
-        volver_button = QPushButton("Volver")
+        # volver_button = QPushButton("Volver")
 
-        widgets = [bon_vino_label, menu_importar_label, bodegas_actualizables_label, self.bodegas_actualizables_list, self.seleccionar_bodega_button, volver_button] 
+        widgets = [bon_vino_label, menu_importar_label, bodegas_actualizables_label, self.bodegas_actualizables_list, self.seleccionar_bodega_button] # , volver_button
 
         styles.alinear(bon_vino_label, styles.TITLE_SIZE)
         styles.alinear(menu_importar_label, styles.LABEL_SIZE)
@@ -71,7 +71,7 @@ class PantallaImportacionNovedades(QMainWindow):
         styles.crearLayout(widgets, layout)
 
         self.seleccionar_bodega_button.clicked.connect(self.tomarBodegasSeleccionada)
-        volver_button.clicked.connect(self.mostrarVentanaMenuPrincipal)
+        # volver_button.clicked.connect(self.mostrarVentanaMenuPrincipal)
         return widget
 
     def ventanaBodegaSeleccionada(self):
@@ -82,8 +82,8 @@ class PantallaImportacionNovedades(QMainWindow):
         self.bodega_label = QLabel()
         vinos_actualizados_label = QLabel("Vinos actualizados: ")
         self.lista_vinos = QListWidget()
-        volver_button = QPushButton("Volver")
-        widgets = [bon_vino_label, self.bodega_label, vinos_actualizados_label, self.lista_vinos, volver_button]
+        #volver_button = QPushButton("Volver")
+        widgets = [bon_vino_label, self.bodega_label, vinos_actualizados_label, self.lista_vinos] # , volver_button
 
         styles.alinear(bon_vino_label, styles.TITLE_SIZE)
         styles.alinear(self.bodega_label, styles.LABEL_SIZE)
@@ -91,7 +91,7 @@ class PantallaImportacionNovedades(QMainWindow):
 
         styles.crearLayout(widgets, layout)    
 
-        volver_button.clicked.connect(self.mostrarVentanaImportacionVinos)
+        #volver_button.clicked.connect(self.mostrarVentanaImportacionVinos)
         return widget
 
 
