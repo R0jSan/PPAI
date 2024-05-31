@@ -120,8 +120,11 @@ class PantallaImportacionNovedades(QMainWindow):
     El parametro bodegas es un array
     """      
     def mostrarBodegasActualizables(self, bodegas):
+        msj = bodegas
         self.bodegas_actualizables_list.clear()
-        self.bodegas_actualizables_list.addItems(bodegas)
+        if len(bodegas) == 0:
+            msj = ["No hay bodegas en período de actualización"]
+        self.bodegas_actualizables_list.addItems(msj)
 
     def mostrarVentanaMenuPrincipal(self):
         self.stacked_widget.setCurrentIndex(0)
