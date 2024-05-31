@@ -95,13 +95,15 @@ class GestorImportacionNovedades:
                     self.actualizarCaracteristicasVinoExistente(vino,bodega)
                 else:
                     self.crearVino(vino)
+
         if len(self.vinosActualizables) > 0:
             self.pantallaImportacionNovedades.mostrarVinosActualizados(bodegaSeleccionada, self.vinosActualizables)
             self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)        
             self.enviarNotificacionesPush(bodegaSeleccionada)
         else:
             self.pantallaImportacionNovedades.mostrarVinosActualizados([], [])
-            self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)        
+            self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)
+        self.finCU()     
 
     def actualizarCaracteristicasVinoExistente(self, vino,bodega):
         bodega.actualizarDatosVino(vino)
@@ -146,3 +148,17 @@ class GestorImportacionNovedades:
                     nombresUsuarios.append(enofilo.getNombreUsuario())
 
         return nombresUsuarios
+    
+    def finCU(self):
+        self.bodegas = None
+        self.bodegasActualizables = None
+        self.nombreBodegasActualizables = None
+        self.pantallaImportacionNovedades = None
+        self.maridajes = None
+        self.tiposUvas = None
+        self.vinosActualizables = None
+        self.fechaActual = None 
+        self.bodegaSeleccionPantalla = None
+        self.enofilos = None
+        self.seguidores = None
+        self.pantallaNotificacion = None
