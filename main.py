@@ -91,14 +91,14 @@ if __name__ == '__main__':
 
 
     vinosMock = [
-    Vino(bodegasMock[0], "Catena Malbec", 2019, "etiqueta_catena_malbec.jpg", 8000, maridajes[0], varietales[0], "Frutado con notas de ciruela y moras."),
-    Vino(bodegasMock[0], "Catena Chardonay", 2020, "etiqueta_catena_chardonnay.jpg", 7600, maridajes[1], varietales[2], "Aromas de manzana verde y pera con un toque de vainilla."),
-    Vino(bodegasMock[1], "Santa Julia Malbec", 2018, "etiqueta_santa_julia_malbec.jpg", 8300, maridajes[0], varietales[0], "Notas de frutos rojos y taninos suaves."),
-    Vino(bodegasMock[1], "Santa Julia Cabernet Sauvignon", 2017, "etiqueta_santa_julia_cabernet.jpg", 9000, maridajes[4], varietales[1], "Aromas a pimiento verde y grosella negra."),
-    Vino(bodegasMock[2], "La Azul Malbec", 2016, "etiqueta_la_azul_malbec.jpg", 6500, maridajes[2], varietales[0], "Sabores intensos de ciruela y especias."),
-    Vino(bodegasMock[2], "La Azul Blanco", 2021, "etiqueta_la_azul_blanco.jpg", 7750, maridajes[1], varietales[3], "Fresco con notas cítricas y florales."),
-    Vino(bodegasMock[3], "Los Toneles Reserva", 2015, "etiqueta_los_toneles_reserva.jpg", 7500, maridajes[2], varietales[4], "Cuerpo robusto con sabores de roble y frutas maduras."),
-    Vino(bodegasMock[3], "Los Toneles Gran Reserva", 2014, "etiqueta_los_toneles_gran_reserva.jpg", 6400, maridajes[2], varietales[4], "Complejo con notas de chocolate, tabaco y vainilla.")
+    Vino(bodegasMock[0], "Catena Malbec", 2019, "etiqueta_catena_malbec.jpg", 8000, maridajes[0],"Varietal 100% Malbec", 100, tiposUva[0], "Frutado con notas de ciruela y moras."),
+    Vino(bodegasMock[0], "Catena Chardonay", 2020, "etiqueta_catena_chardonnay.jpg", 7600, maridajes[1],"Varietal 80% Cabernet Sauvignon, 20% Merlot", 80, tiposUva[1], "Aromas de manzana verde y pera con un toque de vainilla."),
+    Vino(bodegasMock[1], "Santa Julia Malbec", 2018, "etiqueta_santa_julia_malbec.jpg", 8300, maridajes[0],"Varietal 100% Chardonnay", 100, tiposUva[2], "Notas de frutos rojos y taninos suaves."),
+    Vino(bodegasMock[1], "Santa Julia Cabernet Sauvignon", 2017, "etiqueta_santa_julia_cabernet.jpg", 9000, maridajes[4],"Varietal 90% Sauvignon Blanc, 10% Semillon", 90, tiposUva[3], "Aromas a pimiento verde y grosella negra."),
+    Vino(bodegasMock[2], "La Azul Malbec", 2016, "etiqueta_la_azul_malbec.jpg", 6500, maridajes[2],"Varietal 75% Syrah, 25% Grenache", 75, tiposUva[4], "Sabores intensos de ciruela y especias."),
+    Vino(bodegasMock[2], "La Azul Blanco", 2021, "etiqueta_la_azul_blanco.jpg", 7750, maridajes[1], "Varietal 75% Syrah, 25% Grenache", 75, tiposUva[4], "Fresco con notas cítricas y florales."),
+    Vino(bodegasMock[3], "Los Toneles Reserva", 2015, "etiqueta_los_toneles_reserva.jpg", 7500, maridajes[2], "Varietal 100% Chardonnay", 100, tiposUva[2], "Cuerpo robusto con sabores de roble y frutas maduras."),
+    Vino(bodegasMock[3], "Los Toneles Gran Reserva", 2014, "etiqueta_los_toneles_gran_reserva.jpg", 6400, maridajes[2], "Varietal 75% Syrah, 25% Grenache", 75, tiposUva[4], "Complejo con notas de chocolate, tabaco y vainilla.")
 ]
     
     for vino in vinosMock:

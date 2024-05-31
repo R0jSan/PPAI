@@ -2,14 +2,14 @@ from Entities.Varietal import Varietal
 
 
 class Vino:
-    def __init__(self, bodega, nombre, aniada, imgEtiqueta, precioARS, maridaje, varietal, notaCata):
+    def __init__(self, bodega, nombre, aniada, imgEtiqueta, precioARS, maridaje, descripcion, porcentajeUva, tipoUva, notaCata):
         self.bodega = bodega 
         self.nombre = nombre 
         self.aniada = aniada
         self.imgEtiqueta = imgEtiqueta
         self.precioARS = precioARS
         self.maridaje = maridaje
-        self.varietal = varietal
+        self.varietal = self.crearVarietal(descripcion,porcentajeUva,tipoUva)
         self.fechaActualizacion = None
         self.notaCata = notaCata
 
