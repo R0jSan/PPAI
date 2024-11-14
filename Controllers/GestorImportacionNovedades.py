@@ -2,22 +2,25 @@ from Entities.Vino import Vino
 from Interface.InterfazApiBodega import InterfazApiBodega
 from Interface.InterfazNotificacionesPush import InterfazNotificacionesPush
 from datetime import datetime
+from Interface.ISujeto import ISujeto
 
-class GestorImportacionNovedades:
+class GestorImportacionNovedades(ISujeto):
     apiBodega = InterfazApiBodega() # no se donde iria esto
     def __init__(self, pantallaImportacionNovedades):
+        super().__init__()
         self.bodegas = [] # Son todas la bodegas
         self.bodegasActualizables = [] # Son las bodegas que se pueden actualizar
         self.nombreBodegasActualizables = [] # Son el nombre de las bodegas que se pueden actualizar
         self.pantallaImportacionNovedades = pantallaImportacionNovedades # Es la pantalla
         self.maridajes = []
         self.tiposUvas = []
-        self.vinosActualizables = [] # Los vinos que se van a actualizar
+        self.vinosActualizables = {} # Los vinos que se van a actualizar, cambiado a diccionario para que almacene de que bodega es tambien
         self.fechaActual = None # Es la fecha actual calculada por el gestor
         self.bodegaSeleccionPantalla = []
         self.enofilos = []
         self.seguidores = []
         self.pantallaNotificacion = None
+        self.observadores = []
 
     """
     funcion opcionImportarActualizacionVinos()
@@ -57,16 +60,17 @@ class GestorImportacionNovedades:
     y llama a la funcion obtenerActualizacionBodegaeleccionada(), pasandole como parametro un array
     """
     def tomarBodegasSeleccionada(self):
-        # self.bodegaSeleccionPantalla es un array de objetos QListWidgetItem, tengo que aplicarle .text() para filtrar        
         self.bodegaSeleccionPantalla = self.pantallaImportacionNovedades.tomarBodegasSeleccionada()
         bodegasSeleccionadas = []
         # Dos ciclos for para obtener los objetos bodega a partir del nombre tomado desde la pantalla
-        for bodegaNombre in self.bodegaSeleccionPantalla:
-            for bodega in self.bodegasActualizables:
-                if bodegaNombre.text() == bodega.nombre:
-                    bodegasSeleccionadas.append(bodega)
+        if self.bodegaSeleccionPantalla is not None:
+            for bodegaNombre in self.bodegaSeleccionPantalla:  # bodegaNombre ahora es un string
+                for bodega in self.bodegasActualizables:
+                    if bodegaNombre == bodega.nombre:  # Se compara directamente con el nombre de la bodega
+                        bodegasSeleccionadas.append(bodega)
 
-        self.obtenerActualizacionBodegaSeleccionada(bodegasSeleccionadas)
+            self.obtenerActualizacionBodegaSeleccionada(bodegasSeleccionadas)
+
 
     """
     Funcion obtenerActVinosBodegaSeleccionada()
@@ -80,26 +84,37 @@ class GestorImportacionNovedades:
     El parametro "actualizacionesVinos" contiene un array con los vinos a modificar
     """
     def obtenerVinosAActualizar(self, actualizacionesVinos, bodegasSeleccionadas):
+        self.vinosActualizables.clear()
         for bodega in bodegasSeleccionadas:
+            vinos_para_bodega = []
             for vino in actualizacionesVinos:
                 if bodega.tenesEsteVino(vino): # Modificado
-                    self.vinosActualizables.append(vino)
+                    vinos_para_bodega.append(vino)
+            if vinos_para_bodega:
+                self.vinosActualizables[bodega] = vinos_para_bodega
             # Llamado a la funcion actualizarOCrearVinos
-        self.actualizarOCrearVinos(bodegasSeleccionadas)
+        self.actualizarOCrearVinos()
 
-
-    def actualizarOCrearVinos(self, bodegaSeleccionada):
-        for bodega in bodegaSeleccionada:
-            for vino in self.vinosActualizables:
+    """
+    funcion actualizarOCrearVinos()
+    Se le pasa la/las bodega seleccionada y va viendo si los vinos de cada bodega
+    tuvieron una actualizacion y en caso de que el vino no existe lo crea.
+    Cuando lo actualiza muestra por panatalla la infromacion de los vinos actualizados
+    y procede a enviar las notificaciones push a todos los enofilos que siguen a esa bodega
+    """
+    def actualizarOCrearVinos(self):
+        for bodega,vinos in self.vinosActualizables.items():
+            for vino in vinos:
                 if bodega.tenesEsteVino(vino):
                     self.actualizarCaracteristicasVinoExistente(vino,bodega)
                 else:
-                    self.crearVino(vino)
+                    self.crearVino(vino, bodega)
 
         if len(self.vinosActualizables) > 0:
-            self.pantallaImportacionNovedades.mostrarVinosActualizados(bodegaSeleccionada, self.vinosActualizables)
+            bodegasSeleccionadas = list(self.vinosActualizables.keys())
+            self.pantallaImportacionNovedades.mostrarVinosActualizados(self.vinosActualizables)
             self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)        
-            self.enviarNotificacionesPush(bodegaSeleccionada)
+            self.enviarNotificacionesPush(bodegasSeleccionadas)
         else:
             self.pantallaImportacionNovedades.mostrarVinosActualizados([], [])
             self.pantallaImportacionNovedades.stacked_widget.setCurrentIndex(2)
@@ -108,37 +123,46 @@ class GestorImportacionNovedades:
     def actualizarCaracteristicasVinoExistente(self, vino,bodega):
         bodega.actualizarDatosVino(vino)
 
-    def crearVino(self, vino):
-        # Crear un nuevo vino en la bodega seleccionada
-        maridaje = self.buscarMaridaje(vino.maridaje)
-        varietal = self.buscarTipoUva(vino.varietal.tipoUva)
-        vinoNuevo = self.crearVinos(vino, maridaje, varietal)
-        vino.bodega.addVino(vinoNuevo)
+    def crearVino(self, vino_data, bodega):
+        nuevo_vino = Vino(
+            bodega, vino_data.nombre, vino_data.aniada,
+            vino_data.imgEtiqueta, vino_data.precioARS,
+            vino_data.notaCata
+        )
+
+        nuevo_vino.maridaje = self.buscarMaridaje(vino_data.maridaje)
+
+        # Asignar todos los varietales al nuevo vino
+        for varietal in vino_data.varietales:
+            nuevo_vino.agregarVarietal(
+                varietal.getDescripcion(),
+                varietal.getPorcentajeUva(),
+                varietal.getTipoUva()
+            )
+
+        bodega.addVino(nuevo_vino)
 
     def buscarMaridaje(self, maridajeB): #maridajeB es el maridaje que hay que buscar
         for maridaje in self.maridajes:
             if maridaje.sosMaridaje(maridajeB):
                 return maridaje
             return None
-
-    def buscarTipoUva(self,tipoUvaB):
-        for tipoUva in self.tipoUvas:
-            if tipoUva.sosTipoUva(tipoUvaB):
-                return tipoUva
-            return None
             
-    def crearVinos(self,vino, maridaje, varietal):
-        nuevoVino = Vino(vino.bodega, vino.nombre, vino.anio, vino.imgEtiqueta, vino.precioARS, maridaje, varietal, vino.notaCata)
-        nuevoVino.crearVarietal(varietal.descripcion, varietal.porcentajeUva, varietal.tipoUva)
-        return nuevoVino
 
+    """
+    funcion enviarNotificacionesPush
+    Crea la interfaz de notificaciones push y la suscribe a la lista de observadores
+    del gestor. Luego busca a los enofilos que siguen a la bodega actualizada y los notifica.
+    
+    """
     def enviarNotificacionesPush(self, bodegas):
-        usuarios = self.buscarSeguidoresBodega(bodegas)
-        
-        for bodega in bodegas:
-            self.pantallaNotificacion = InterfazNotificacionesPush(usuarios, bodega)
-            self.pantallaNotificacion.notificarNovedadVinoParaBodega()
+        notificadorPush = InterfazNotificacionesPush()
+        self.suscribir(notificadorPush)
 
+        # Para cada bodega seleccionada, buscar los seguidores y envia la notificación correspondiente
+        for bodega in bodegas:
+            usuarios_seguidores = self.buscarSeguidoresBodega([bodega])
+            self.notificar(bodega, usuarios_seguidores)
 
     def buscarSeguidoresBodega(self, bodegas):
         nombresUsuarios = []
@@ -147,8 +171,22 @@ class GestorImportacionNovedades:
                 if enofilo.seguisABodega(bodega):
                     nombresUsuarios.append(enofilo.getNombreUsuario())
 
+
         return nombresUsuarios
     
+    def suscribir(self, observer):
+        if observer not in self.observadores:
+            self.observadores.append(observer)
+
+    def quitar(self, observador):
+        if observador in self.observadores:
+            self.observadores.remove(observador)
+
+    def notificar(self,bodega, usuarios):
+        for observador in self.observadores:
+            observador.actualizar(usuarios, bodega.nombre)
+        
+
     def finCU(self):
         del self.bodegas
         del self.bodegasActualizables

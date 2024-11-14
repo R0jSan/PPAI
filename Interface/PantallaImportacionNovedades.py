@@ -8,7 +8,7 @@ class PantallaImportacionNovedades(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Menú de administrador de Bonvino")
-        self.setFixedSize(390, 695) 
+        self.setFixedSize(450, 695) 
 
         # Imagen de fondo
         self.definirFondo("Interface\\style\\bonvino.png")
@@ -109,7 +109,7 @@ class PantallaImportacionNovedades(QMainWindow):
             for item in selectedItems:
             # self.bodega_label.setText(f"Bodega {selectedItems[0].text()}")
             # self.mostrarVentanaBodegaSeleccionada()
-                bodegasSeleccionadas.append(item)
+                bodegasSeleccionadas.append(item.text())
             # return selectedItems[0]
             # return selectedItems[0].text() # Agregado
             return bodegasSeleccionadas
@@ -143,44 +143,47 @@ class PantallaImportacionNovedades(QMainWindow):
         palette.setBrush(QPalette.Window, QBrush(pixmap))
         self.setPalette(palette)
 
-    def mostrarVinosActualizados(self, bodegas, vinos):
-        
-        if len(vinos) > 0:
-            for bodega in bodegas:
-                flag = False
-                #self.lista_vinos.clear()
-    
-                for vino in vinos:
-                    if bodega.getNombre() == vino.bodega:
-                        
+    def mostrarVinosActualizados(self, vinos_actualizables):
+        self.lista_vinos.clear()
+
+        if len(vinos_actualizables) > 0:
+            for bodega, vinos in vinos_actualizables.items():
+                if len(vinos) > 0:
+                    self.crearLabelBodega(bodega, self.lista_vinos)
+
+                    for vino in vinos:
                         vino_widget = QWidget()
                         vino_layout = QVBoxLayout(vino_widget)
-                        
-                        if not flag:
-                            self.crearLabelBodega(bodega, vino_layout)
-                            flag = True
 
                         nombre_label = QLabel(f"Nombre: {vino.nombre}")
                         anio_label = QLabel(f"Añada: {vino.aniada}")
                         precio_label = QLabel(f"Precio: {vino.precioARS} ARS")
                         nota_cata_label = QLabel(f"Nota de cata: {vino.notaCata}")
 
-                        widgets = [nombre_label, anio_label, precio_label, nota_cata_label] 
-                        
+                        widgets = [nombre_label, anio_label, precio_label, nota_cata_label]
+
                         nombre_label.setStyleSheet("font-weight: bold; color: #333;")
                         anio_label.setStyleSheet("color: #555;")
                         precio_label.setStyleSheet("color: #555;")
                         nota_cata_label.setStyleSheet("color: #555;")
 
                         styles.crearLayout(widgets, vino_layout)
-            
+
+                        varietales_header_label = QLabel("Varietales:")
+                        varietales_header_label.setStyleSheet(" color: #333;")
+                        vino_layout.addWidget(varietales_header_label)
+
+                        for varietal in vino.varietales:
+                            varietal_label = QLabel(f"- {varietal.descripcion} ({varietal.porcentajeUva}%)")
+                            varietal_label.setStyleSheet("color: #555;")
+                            vino_layout.addWidget(varietal_label)
+
                         list_item = QListWidgetItem(self.lista_vinos)
                         list_item.setSizeHint(vino_widget.sizeHint())
-            
+
                         self.lista_vinos.addItem(list_item)
                         self.lista_vinos.setItemWidget(list_item, vino_widget)
         else:
-            
             vino_widget = QWidget()
             vino_layout = QVBoxLayout(vino_widget)
             nombre_label = QLabel(f"No hay actualizaciones disponibles")
@@ -190,9 +193,19 @@ class PantallaImportacionNovedades(QMainWindow):
             list_item.setSizeHint(vino_widget.sizeHint())
             self.lista_vinos.addItem(list_item)
             self.lista_vinos.setItemWidget(list_item, vino_widget)
+
+
+
     
-    def crearLabelBodega(self, bodega, layout):
+    def crearLabelBodega(self, bodega, lista_vinos):
         bodega_label = QLabel(f"~~~ {bodega.nombre} ~~~")
         bodega_label.setStyleSheet("font-weight: bold; color: #333; font-size: 15px")
         bodega_label.setAlignment(Qt.AlignHCenter)
-        layout.addWidget(bodega_label)
+
+        # Crear un widget que contenga el QLabel de la bodega
+        list_item = QListWidgetItem(lista_vinos)
+        list_item.setSizeHint(bodega_label.sizeHint())
+
+        # Añadir el QLabel al QListWidget
+        lista_vinos.addItem(list_item)
+        lista_vinos.setItemWidget(list_item, bodega_label)
